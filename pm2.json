@@ -3,7 +3,7 @@
         "name": "web-node",
         "script": "app.js",
         "cwd": "./",
-        "args": "--env dev",
+        "args": "",
         "interpreter": "",
         "interpreter_args": "",
         "watch": true,
