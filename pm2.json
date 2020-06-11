@@ -1,0 +1,37 @@
+{
+    "apps": {
+        "name": "web-node",
+        "script": "app.js",
+        "cwd": "./",
+        "args": "--env dev",
+        "interpreter": "",
+        "interpreter_args": "",
+        "watch": true,
+        "ignore_watch": [
+            "node_modules",
+            "logs"
+        ],
+        "exec_mode": "cluster",
+        "instances": 4,
+        "max_memory_restart": "1024M",
+        "error_file": "./logs/web-err.log",
+        "out_file": "./logs/web-out.log",
+        "merge_logs": true,
+        "log_date_format": "YYYY-MM-DD HH:mm:ss",
+        "min_uptime": "60s",
+        "max_restarts": 100,
+        "autorestart": true,
+        "cron_restart": "",
+        "restart_delay": 1000,
+        "instance_var":"NODE_APP_INSTANCE",
+        "env": {
+           "NODE_ENV": "production"
+        },
+        "env_dev": {
+            "NODE_ENV": "development"
+        },
+        "env_test": {
+            "NODE_ENV": "test"
+        }
+    }
+}

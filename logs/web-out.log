@@ -1,0 +1,4 @@
+2020-06-11 06:26:34: Executing (default): SELECT 1+1 AS result
+2020-06-11 06:26:34: GET / - 1369ms
+2020-06-11 06:26:54: Executing (default): SELECT 1+1 AS result
+2020-06-11 06:26:55: GET / - 760ms
