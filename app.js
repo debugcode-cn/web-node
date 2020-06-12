@@ -101,7 +101,6 @@ app.use(async (ctx, next)=>{
 		DB_Redis.getClient().expire(session_id, 20 * 60 );
 		ctx.cookies.set(session_name, session_id, { signed: true });
 	}).catch((err)=>{
-		console.log('catch err',err)
 		throw createError(500, 'session start error', {expose:true});
 	})
 	await next();
@@ -142,7 +141,7 @@ app.use(Controller());
 app.use(async (ctx, next) => {
 	const rt_start = ctx.response.get('X-Response-Time-Start');
 	const ms = Date.now() - 1 * rt_start;
-	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+	console.log(`pid: ${process.pid} ; ${ctx.method} ${ctx.url} - ${ms}ms`);
 	await next();
 });
 /** footer end */
