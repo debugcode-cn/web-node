@@ -7,7 +7,7 @@ node web by koa2
 
 登录session信息使用redis服务器单独存储
 
-普通数据使用mysql 数据库，基于sequelize模块进行关系模型映射
+普通数据使用mysql，sequelize进行对象关系映射
 
 包含websocket引用、测试程序
 
