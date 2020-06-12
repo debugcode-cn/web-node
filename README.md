@@ -16,3 +16,6 @@ node web by koa2
 引入mongoose，尚未定义对应表规则
 
 使用长连接：redis、mysql、mongodb
+
+查看MySQL通信连接信息
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
