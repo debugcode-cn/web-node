@@ -14,6 +14,7 @@ class Mysql{
             host: config.host,
             port: config.port,
             dialect: 'mysql',
+            timezone:'+08:00',
             pool: {
                 max: 10,
                 min: 0,
@@ -21,7 +22,6 @@ class Mysql{
                 idle: 10000
             }
         });
-        return this.client.authenticate();
     }
     quitClient(){
         if(this.client){
