@@ -1,3 +1,6 @@
+/**
+ * 将所有model文件挂载到ctx中
+ */
 
 const fs = require('fs');
 const path = require('path');
@@ -31,8 +34,8 @@ module.exports = {
                 // if(!ENV_Production){
                 //     await _model.sync({force: true});
                 // }
-                if(!global['Model'+name]){
-                    global['Model'+name] = _model; // 老生代内存
+                if(!ctx[name]){
+                    ctx[name] = _model; // 老生代内存
                 }
             }
             

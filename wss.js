@@ -23,6 +23,9 @@ module.exports = function WebSocketServer(http_server){
             return ws.close(4001, 'Invalid cookie');
         }
 
+        console.log('global.User',global.User.get({
+            plain: true
+        }))
         ws.user = global.User || undefined;
         ws.wss = wss;
 

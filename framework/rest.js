@@ -21,10 +21,8 @@ module.exports = {
                         message
                     }
                 }
-                await next();
-            } else {
-                await next();
             }
+            await next();
         }
     }
 }

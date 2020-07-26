@@ -3,18 +3,21 @@ const UUID = require("uuid");
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
 const KoaBody = require('koa-body');
+const cors = require('koa2-cors');
 
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
 global.ENV_Production = process.env.NODE_ENV === 'production';
 global.BasePath = __dirname;
 global.FrameWorkPath = path.join(BasePath, 'framework');
+global.SessionExpire = 20 * 60;
 
 const Redis = require(path.join(BasePath, 'db', 'redis', 'client.js'));
 
 const Controller = require(path.join(FrameWorkPath, 'controller.js') );
 const View = require(path.join(FrameWorkPath, 'view.js') );
 const Model = require(path.join(FrameWorkPath, 'model.js'));
+const Bizes = require(path.join(FrameWorkPath, 'biz.js'));
 
 const Rest = require(path.join(FrameWorkPath, 'rest.js') );
 const createError = require('http-errors');
@@ -29,6 +32,9 @@ app.on('error', (err, ctx) => {
 });
 
 /** prebind end */
+
+// 跨域
+app.use(cors());
 
 
 /** static load start */
@@ -47,6 +53,19 @@ app.use(async (ctx, next) => {
 //暂时不需要分开创建数据库连接与模型对象
 app.use(Model.sql());
 // app.use(Model.nosql());
+
+// load base;
+app.use(async (ctx, next)=>{
+	let sbiz = require(path.join(BasePath , 'base', 'SBiz' ));
+	if(!global['SBiz']){
+		sbiz.setCtx(ctx);
+		global['SBiz'] = sbiz; // 老生代内存
+	}
+	await next();
+});
+
+// load biz
+app.use(Bizes());
 
 //load redis
 app.use(async (ctx, next)=>{
@@ -77,29 +96,28 @@ app.use(async (ctx, next)=>{
 			})
 		}
 	}).then(async (session)=>{
-		const timestamp = new Date().getTime();
-		const expire = 20 * 60 * 10000;
 		if(session){
-			session.deadline = timestamp +  expire
-			if(session.user_id){
-				let user = await ModelUser.findByPk(session.user_id);
-				global.User = user.get({plain:true})
+			let user = await ctx.UserBiz.getUser(session.user_id);
+			if(user){
+				global.User = user;
 				ctx.state.User = user.get({plain:true});
+			}else{
+				delete global.User
+				delete ctx.state.User
 			}
 		}else{
-			session_id =  'sid_' + UUID.v1().replace(/-/g,''); //已经过期，需要生成新的
+			session_id =  'sid_' + UUID.v1().replace(/-/g,''); //生成新的
 			session = {
 				id : session_id,
-				deadline : ''+(timestamp +  expire),
 				utm : 'search'
 			}
 		}
 		DB_Redis.getClient().hmset(session_id, session);
-		global.session = session;
+		DB_Redis.getClient().expire(session_id, SessionExpire );
 
-		//更新到期时间
-		DB_Redis.getClient().expire(session_id, 20 * 60 );
+		global.session = session;
 		ctx.cookies.set(session_name, session_id, { signed: true });
+
 	}).catch((err)=>{
 		throw createError(500, 'session start error', {expose:true});
 	})

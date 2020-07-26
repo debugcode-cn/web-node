@@ -1,9 +1,10 @@
-const {Op} = require('sequelize');
-const path = require('path');
+const {Op, Model} = require('sequelize');
+const util = require('util');
 
 module.exports = {
     "GET /":async ( ctx, next )=>{
         try{
+            // let user = await ctx.UserBiz.create(Date.now());
             ctx.state.where = {
                 'is':'adc'
             }

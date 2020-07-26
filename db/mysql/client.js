@@ -36,6 +36,12 @@ class Mysql{
 
     defineSQLModel(name, attributes) {
         let attrs = {};
+        attrs.id = {
+            type: Sequelize.INTEGER(11),
+            primaryKey: true,
+            autoIncrement:true
+        };
+
         for (let key in attributes) {
             let value = attributes[key];
             if (typeof value === 'object' && value['type']) {
@@ -48,40 +54,31 @@ class Mysql{
                 };
             }
         }
-        attrs.id = {
-            type: Sequelize.INTEGER(11),
-            primaryKey: true,
-            autoIncrement:true
+        
+        attrs.created_at = {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue:0
         };
-        attrs.createdAt = {
-            type: Sequelize.BIGINT,
-            allowNull: false
+        attrs.updated_at = {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue:0
         };
-        attrs.updatedAt = {
-            type: Sequelize.BIGINT,
-            allowNull: false
-        };
-        attrs.version = {
-            type: Sequelize.BIGINT,
-            allowNull: false
-        };
-        return this.client.define(name, attrs, {
+        this.client.define(name, attrs, {
             tableName: name,
             timestamps: false,
             hooks: {
                 beforeValidate: function (obj) {
                     let now = Date.now();
                     if (obj.isNewRecord) {
-                        obj.createdAt = now;
-                        obj.updatedAt = now;
-                        obj.version = 0;
-                    } else {
-                        obj.updatedAt = now;
-                        obj.version++;
+                        obj.created_at = Math.floor(now/1000);
                     }
+                    obj.updated_at = Math.floor(now/1000);
                 }
             }
         });
+        return this.client.model(name);
     }
 
 }

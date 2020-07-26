@@ -21,5 +21,5 @@ module.exports = function (controller) {
             }
         }
     })
-    return router.routes();
+    return router.middleware();
 }
