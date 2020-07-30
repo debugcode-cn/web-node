@@ -12,6 +12,8 @@ global.BasePath = __dirname;
 global.FrameWorkPath = path.join(BasePath, 'framework');
 global.SessionExpire = 20 * 60;
 
+const PORT = process.env.PORT;
+
 const Redis = require(path.join(BasePath, 'db', 'redis', 'client.js'));
 
 const Controller = require(path.join(FrameWorkPath, 'controller.js') );
@@ -145,7 +147,7 @@ app.use(KoaBody({
 
 app.use(View('view', {
     noCache: !ENV_Production,
-    watch: ! ENV_Production
+    watch: !ENV_Production
 }));
 
 //注册添加rest接口
@@ -168,9 +170,9 @@ app.use(async (ctx, next) => {
 
 
 //HttpServer
-let http_server = app.listen(9000); 
+let http_server = app.listen(PORT); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WebSocketServer
-require(path.join(BasePath,'wss.js'))(http_server);
+require(path.join(BasePath,'components','websocket','wss.js'))(http_server);
