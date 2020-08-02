@@ -30,7 +30,11 @@
             "env": {
                "NODE_ENV": "production",
                "PORT": 9000
-            }
+            },
+            "env_development": {
+                "NODE_ENV": "development",
+                "PORT": 9000
+             }
         }
     ]
 }
