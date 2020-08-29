@@ -54,7 +54,7 @@ app.use(async (ctx, next) => {
 //加载模型对象 database(mysql|mongodb)，
 //暂时不需要分开创建数据库连接与模型对象
 app.use(Model.sql());
-// app.use(Model.nosql());
+app.use(Model.nosql());
 
 // load base;
 app.use(async (ctx, next)=>{
