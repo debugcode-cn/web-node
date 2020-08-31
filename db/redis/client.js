@@ -12,19 +12,25 @@ class Redis{
     }
     createClient(){
         return new Promise((resolve, reject)=>{
-            this.client = redis.createClient(config);
-            this.client.setMaxListeners(0);
-            this.client.on('connect',()=>{
+            if(!this.client){
+                this.client = redis.createClient(config);
+                this.client.setMaxListeners(0);
+                this.client.on('connect',()=>{
+                    resolve();
+                });
+                this.client.on('error',(err)=>{
+                    reject(err);
+                });
+            }else{
                 resolve();
-            });
-            this.client.on('error',(err)=>{
-                reject(err);
-            });
+            }
         })
     }
     quitClient(){
         if(this.client){
-            this.client.quit();
+            this.client.quit(()=>{
+                this.client = null;
+            });
         }
     }
     getClient(){

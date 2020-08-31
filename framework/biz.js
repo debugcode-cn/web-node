@@ -11,8 +11,8 @@ module.exports = function () {
         });
         for (let filename of biz_names) {
             let biz_name = filename.substring(0, filename.length - 3);
-            let biz = require(path.join(BasePath , dir, filename ));
             if(!ctx[biz_name]){
+                let biz = require(path.join(BasePath , dir, filename ));
                 ctx[biz_name] = biz; // 老生代内存
             }
         }
