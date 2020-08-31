@@ -17,6 +17,6 @@ UserSchema.methods.speak = function () {
 }
 
 module.exports = {
-    name:'UserModel',
+    name:'user',
     schema:UserSchema
 }

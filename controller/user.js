@@ -14,7 +14,7 @@ module.exports = {
         if(!email || !password){
             throw createError(400, 'params less');
         }
-        await ctx.UserModel.findOne({ where: {email: email} }).then(user => {
+        await UserModel.findOne({ where: {email: email} }).then(user => {
             if(user){
                 console.log('findOne user',user.get({
                     plain: true
@@ -22,7 +22,7 @@ module.exports = {
                 throw createError(400, '邮箱已存在');
             }
         }).then(()=>{
-            return ctx.UserModel.create({
+            return UserModel.create({
                 namenick: 'User'+timestamp,
                 email: email,
                 password:password
@@ -45,7 +45,7 @@ module.exports = {
         let email = body.email.trim();
         let password = body.password.trim();
 
-        await ctx.UserModel.findOne({ where: {email: email, password: password} }).then(user => {
+        await UserModel.findOne({ where: {email: email, password: password} }).then(user => {
             if(user){
                 let user_plain = user.get({
                     plain: true
@@ -65,7 +65,7 @@ module.exports = {
         if(!session || !session.user_id){
             throw createError(400, '错误请求');
         }
-        await ctx.UserModel.findByPk(parseInt(session.user_id)).then(user => {
+        await UserModel.findByPk(parseInt(session.user_id)).then(user => {
             if(user){
                 let user_plain = user.get({plain: true});
                 DB_Redis.getClient().expire(session.id, 0 );

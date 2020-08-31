@@ -21,6 +21,15 @@ module.exports = {
             ctx.response.body = e.message;
         }
         await next();
+    },
+    "GET /testmongodb": async (ctx, next) =>{
+        try{
+            let ttt = new userSchema({name:'ttt'});
+            let rrr = await ttt.save();
+            ctx.response.body = JSON.stringify({name:ttt.name,'test111':true,'api':'testmongodb'});
+        }catch(e){
+            ctx.response.body = e.message;
+        }
+        await next();
     }
-
 }
