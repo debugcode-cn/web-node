@@ -3,21 +3,19 @@
  */
 const fs = require('fs');
 const path = require('path');
-module.exports = function () {
-    return async (ctx, next)=>{
+module.exports = {
+    load:()=>{
+        console.log('加载所有biz')
         let dir = 'biz';
         let biz_names = fs.readdirSync(path.join(BasePath , dir)).filter((f) => {
             return f.endsWith('.js');
         });
         for (let filename of biz_names) {
             let biz_name = filename.substring(0, filename.length - 3);
-            if(!ctx[biz_name]){
+            if(!global[biz_name]){
                 let biz = require(path.join(BasePath , dir, filename ));
-                ctx[biz_name] = biz; // 老生代内存
+                global[biz_name] = biz; // 老生代内存
             }
         }
-        await next();
     }
 }
-
-

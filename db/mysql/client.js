@@ -33,54 +33,6 @@ class Mysql{
     getClient(){
         return this.client;
     }
-
-    defineSQLModel(name, attributes) {
-        let attrs = {};
-        attrs.id = {
-            type: Sequelize.INTEGER(11),
-            primaryKey: true,
-            autoIncrement:true
-        };
-
-        for (let key in attributes) {
-            let value = attributes[key];
-            if (typeof value === 'object' && value['type']) {
-                value.allowNull = value.allowNull || false;
-                attrs[key] = value;
-            } else {
-                attrs[key] = {
-                    type: value,
-                    allowNull: false
-                };
-            }
-        }
-        
-        attrs.created_at = {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            defaultValue:0
-        };
-        attrs.updated_at = {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            defaultValue:0
-        };
-        this.client.define(name, attrs, {
-            tableName: name,
-            timestamps: false,
-            hooks: {
-                beforeValidate: function (obj) {
-                    let now = Date.now();
-                    if (obj.isNewRecord) {
-                        obj.created_at = Math.floor(now/1000);
-                    }
-                    obj.updated_at = Math.floor(now/1000);
-                }
-            }
-        });
-        return this.client.model(name);
-    }
-
 }
 
 module.exports = Mysql;
