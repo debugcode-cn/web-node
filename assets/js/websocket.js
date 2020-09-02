@@ -1,9 +1,10 @@
 var host = location.host;//本地域名
 var port = 32772;//与docker 容器中web端口对应的本地端口
-var  wsServer = 'ws://'+host+':'+port+'/wechat';
+var  wsServer = 'ws://'+host+'/wechat';
 var  websocket = createWebSocket();
 
 function createWebSocket(){
+    console.log('wsServer',wsServer)
     var  websocket = new WebSocket(wsServer);
     websocket.onopen = function (evt) { onOpen(evt) };
     websocket.onclose = function (evt) { onClose(evt) };

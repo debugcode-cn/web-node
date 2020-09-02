@@ -21,6 +21,7 @@ class Mongodb{
                 resolve();
             });
             this.client.on('error',(err)=>{
+                console.log('error',err)
                 reject(err);
             });
         })

@@ -11,5 +11,11 @@ module.exports = {
     },
     "GET /api/testerr":async (ctx, next) => {
         ctx.restError('test:testerr','测试错误接口1');
+    },
+    "GET /api/testmongodb":async (ctx, next) => {
+        let user = new userSchema({name:'ttt'});
+        let rrr = await user.save();
+        console.log(typeof rrr, rrr)
+        ctx.rest({name:user.name,'test111':true,'api':'testmongodb'});
     }
 }

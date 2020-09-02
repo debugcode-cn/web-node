@@ -1,116 +1,91 @@
+// ================================================================================================
+
 const path  = require('path');
 const UUID = require("uuid");
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
 const KoaBody = require('koa-body');
+const cors = require('koa2-cors');
+const createError = require('http-errors');
+
+// ================================================================================================
 
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
 global.ENV_Production = process.env.NODE_ENV === 'production';
 global.BasePath = __dirname;
 global.FrameWorkPath = path.join(BasePath, 'framework');
+global.SessionExpire = 20 * 60;
 
+// ================================================================================================
+
+const DBManager = require(path.join(BasePath, 'db', 'DBManager.js'));
 const Redis = require(path.join(BasePath, 'db', 'redis', 'client.js'));
+const LoadSessionFromRedis = require(path.join(BasePath,'components','session','redis.js'))
+
+// ================================================================================================
 
 const Controller = require(path.join(FrameWorkPath, 'controller.js') );
+const Rest = require(path.join(FrameWorkPath, 'rest.js') );
 const View = require(path.join(FrameWorkPath, 'view.js') );
 const Model = require(path.join(FrameWorkPath, 'model.js'));
+Model.loadSQL();
+Model.loadNOSQL();
 
-const Rest = require(path.join(FrameWorkPath, 'rest.js') );
-const createError = require('http-errors');
+// ================================================================================================
+
+global.SBiz = require(path.join(BasePath , 'base', 'SBiz.js' ));
+const Bizes = require(path.join(FrameWorkPath, 'biz.js'));
+Bizes.load();
+
+// ================================================================================================
 
 const app = new Koa({
 	keys: CookieKeys
 });
-
-/** prebind start */
-app.on('error', (err, ctx) => {
-	console.error('app error',err.message)
-});
-
-/** prebind end */
-
-
-/** static load start */
-app.use(KoaStatic(BasePath));//建议加cdn
-/** static load end */
-
-
-/** header start */
+app.on('error', (err, ctx) => {console.error('app error',err.message)});
+app.use(cors());
 app.use(async (ctx, next) => {
-	const rt_start = Date.now();
-	ctx.set('X-Response-Time-Start', `${rt_start}`);
+	ctx.set('X-Response-Time-Start', `${Date.now()}`);
 	await next();
 });
+app.use(KoaStatic(BasePath));//建议加cdn
 
-//加载模型对象 database(mysql|mongodb)，
-//暂时不需要分开创建数据库连接与模型对象
-app.use(Model.sql());
-// app.use(Model.nosql());
+// ================================================================================================
 
-//load redis
+/**
+ * 创建数据库链接、定义模型
+ * 创建缓存链接
+ */
+app.use(async (ctx, next)=>{
+	await DBManager.createDriver('sql')
+	await DBManager.createDriver('nosql')
+
+	await DBManager.createClient('sql');//TODO pay attention to new client per req
+	await DBManager.createClient('nosql');//TODO pay attention to new client per req
+
+	await Model.defineSql(DBManager.getClient('sql'));
+	await Model.defineNoSql(DBManager.getClient('nosql'));
+
+	await next();
+});
 app.use(async (ctx, next)=>{
 	if(!global.DB_Redis){
 		global.DB_Redis = new Redis();
-		await DB_Redis.createClient().catch((err)=>{
-			throw createError(500, 'load redis error', {expose:true});
-		});
 	}
-	await next();
-});
-
-// cookie session cache(redis)
-// set session_nid and set User;
-app.use(async (ctx, next)=>{
-	let session_id = ctx.cookies.get(session_name, {signed:true});
-	await new Promise((resolve, reject)=>{
-		if(!session_id){
-			resolve();
-		}else{
-			//获取session_id
-			DB_Redis.getClient().hgetall(session_id, (err, session)=>{
-				if(err){
-					reject(err);
-				}else{
-					resolve(session);
-				}
-			})
-		}
-	}).then(async (session)=>{
-		const timestamp = new Date().getTime();
-		const expire = 20 * 60 * 10000;
-		if(session){
-			session.deadline = timestamp +  expire
-			if(session.user_id){
-				let user = await ModelUser.findByPk(session.user_id);
-				global.User = user.get({plain:true})
-				ctx.state.User = user.get({plain:true});
-			}
-		}else{
-			session_id =  'sid_' + UUID.v1().replace(/-/g,''); //已经过期，需要生成新的
-			session = {
-				id : session_id,
-				deadline : ''+(timestamp +  expire),
-				utm : 'search'
-			}
-		}
-		DB_Redis.getClient().hmset(session_id, session);
-		global.session = session;
-
-		//更新到期时间
-		DB_Redis.getClient().expire(session_id, 20 * 60 );
-		ctx.cookies.set(session_name, session_id, { signed: true });
-	}).catch((err)=>{
-		throw createError(500, 'session start error', {expose:true});
-	})
+	await DB_Redis.createClient().catch((err)=>{
+		console.log('err',err)
+		throw createError(500, 'load redis error', {expose:true});
+	});
 	await next();
 });
 
 
-/** header end */
+// ================================================================================================
 
 /** body start */
 //body parse
+app.use(LoadSessionFromRedis());
 app.use(KoaBody({
 	multipart: true,
     encoding: 'utf-8',
@@ -124,35 +99,42 @@ app.use(KoaBody({
         }
 	}
 }));
-
 app.use(View('view', {
     noCache: !ENV_Production,
-    watch: ! ENV_Production
+    watch: !ENV_Production
 }));
-
 //注册添加rest接口
 app.use(Rest.restify());
-
 app.use(Controller());
-
 /** body end */
 
+// ================================================================================================
+
 /** footer start */
+// 关闭数据库链接，断开redis连接
+// app.use(async (ctx, next)=>{
+	// await DBManager.quitClient('sql');
+	// await DBManager.quitClient('nosql');
+	// await DB_Redis.quitClient()
+	// await next();
+// });
+
 app.use(async (ctx, next) => {
 	const rt_start = ctx.response.get('X-Response-Time-Start');
 	const ms = Date.now() - 1 * rt_start;
 	console.log(`pid: ${process.pid} ; ${ctx.method} ${ctx.url} - ${ms}ms`);
 	await next();
 });
+
 /** footer end */
 
-
-
-
 //HttpServer
-let http_server = app.listen(9000); 
+let PORT = process.env.PORT || 80 ;
+let http_server = app.listen(PORT,()=>{
+	console.log('127.0.0.1:'+PORT+' 启动完成！')
+}); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WebSocketServer
-require(path.join(BasePath,'wss.js'))(http_server);
+require(path.join(BasePath,'components','websocket','wss.js'))(http_server);
