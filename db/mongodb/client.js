@@ -5,7 +5,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const config = require(path.join(BasePath,'config','params.mongodb.js'));
+const params = require(path.join(BasePath,'config','params.js'));
+let config = params.mongodb();
 
 class Mongodb{
     constructor(){
