@@ -137,4 +137,4 @@ let http_server = app.listen(PORT,()=>{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WebSocketServer
-require(path.join(BasePath,'components','websocket','wss.js'))(http_server);
+require(path.join(BasePath,'components','websocket','server.js'))(http_server);

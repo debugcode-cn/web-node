@@ -11,16 +11,16 @@ module.exports = function WebSocketServer(http_server){
     wss.on('connection',(ws,request)=>{
         let url = request.url;
         if(url !== '/wechat'){
-            return ws.close(4001, 'Invalid url');
+            return ws.close(401, 'Invalid url');
         }
         let headers = request.headers;
         if(!headers){
-            return ws.close(4001, 'Invalid headers');
+            return ws.close(401, 'Invalid headers');
         }
         let cookies = new Cookies(request,{},{keys:CookieKeys});
         let session_nid = cookies.get(session_name, { signed: true });
         if(!session_nid){
-            return ws.close(4001, 'Invalid cookie');
+            return ws.close(401, 'Invalid cookie');
         }
 
         console.log('global.User',global.User.get({
