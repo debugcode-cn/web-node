@@ -29,7 +29,7 @@ const Controller = require(path.join(FrameWorkPath, 'controller.js') );
 const Rest = require(path.join(FrameWorkPath, 'rest.js') );
 const View = require(path.join(FrameWorkPath, 'view.js') );
 const Model = require(path.join(FrameWorkPath, 'model.js'));
-Model.loadSQL();
+// Model.loadSQL();
 Model.loadNOSQL();
 
 // ================================================================================================
@@ -58,13 +58,13 @@ app.use(KoaStatic(BasePath));//建议加cdn
  * 创建缓存链接
  */
 app.use(async (ctx, next)=>{
-	await DBManager.createDriver('sql')
+	// await DBManager.createDriver('sql')
 	await DBManager.createDriver('nosql')
 
-	await DBManager.createClient('sql');//TODO pay attention to new client per req
+	// await DBManager.createClient('sql');//TODO pay attention to new client per req
 	await DBManager.createClient('nosql');//TODO pay attention to new client per req
 
-	await Model.defineSql(DBManager.getClient('sql'));
+	// await Model.defineSql(DBManager.getClient('sql'));
 	await Model.defineNoSql(DBManager.getClient('nosql'));
 
 	await next();

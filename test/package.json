@@ -1,0 +1,19 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "本地测试",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js "
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "wanglei",
+  "license": "ISC",
+  "dependencies": {
+    "curl": "^0.1.4",
+    "ioredis": "^4.17.3",
+    "typescript": "^3.9.5"
+  }
+}
