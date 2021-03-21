@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const config = require(path.join(BasePath,'config','params.mongodb.js'));
+// let uri = 'mongodb://'+config.username+':'+config.password+'@'+config.host+':'+config.port+'/'+config.db+'?authSource=node' ;
 
 class Mongodb{
     constructor(){
@@ -13,8 +14,7 @@ class Mongodb{
     }
     createClient(){
         return new Promise((resolve, reject)=>{
-            let uri = 'mongodb://'+config.username+':'+config.password+'@'+config.host+':'+config.port+'/'+config.db+'?authSource=node' ;
-            let tt = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+            let tt = mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true});
             this.client =  mongoose.connection;
             this.client.setMaxListeners(0);
             this.client.on('connected',(a)=>{

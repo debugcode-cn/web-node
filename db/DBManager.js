@@ -28,12 +28,12 @@ class DBManager{
     }
 
     static async createClient(driver){
-        if(driver == 'sql'){
-            MysqlClient.createClient()
+        if(driver == 'sql' && MysqlClient){
+            global.MysqlClient.createClient()
             await MysqlClient.getClient().authenticate().catch((err)=>{
                 throw createError(500, 'Unable to connect to the database mysql', {expose:true});
             });
-        }else if(driver == 'nosql'){
+        }else if(driver == 'nosql' && MongodbClient){
             await MongodbClient.createClient().catch((err)=>{
                 throw createError(500, 'Unable to connect to the database '+dialect, {expose:true});
             });
@@ -43,17 +43,17 @@ class DBManager{
     }
 
     static async quitClient(driver){
-        if(driver == 'sql'){
+        if(driver == 'sql' && MysqlClient){
             await MysqlClient.quitClient()
-        }else if(driver == 'nosql'){
+        }else if(driver == 'nosql' && MongodbClient){
             await MongodbClient.quitClient();
         }
     }
 
     static getClient(driver){
-        if(driver == 'sql'){
+        if(driver == 'sql' && MysqlClient){
             return MysqlClient.getClient();
-        }else if(driver == 'nosql'){
+        }else if(driver == 'nosql' && MongodbClient){
             return MongodbClient.getClient();
         }else{
             throw createError(500, 'Unable to getClient ' + driver , {expose:true});

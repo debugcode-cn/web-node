@@ -7,6 +7,7 @@ const KoaStatic = require('koa-static');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
+const Router = require('koa-router');
 
 // ================================================================================================
 
@@ -58,13 +59,13 @@ app.use(KoaStatic(BasePath));//建议加cdn
  * 创建缓存链接
  */
 app.use(async (ctx, next)=>{
-	await DBManager.createDriver('sql')
+	// await DBManager.createDriver('sql')
 	await DBManager.createDriver('nosql')
 
-	await DBManager.createClient('sql');//TODO pay attention to new client per req
+	// await DBManager.createClient('sql');//TODO pay attention to new client per req
 	await DBManager.createClient('nosql');//TODO pay attention to new client per req
 
-	await Model.defineSql(DBManager.getClient('sql'));
+	// await Model.defineSql(DBManager.getClient('sql'));
 	await Model.defineNoSql(DBManager.getClient('nosql'));
 
 	await next();
@@ -103,6 +104,7 @@ app.use(View('view', {
     noCache: !ENV_Production,
     watch: !ENV_Production
 }));
+
 //注册添加rest接口
 app.use(Rest.restify());
 app.use(Controller());
@@ -112,12 +114,12 @@ app.use(Controller());
 
 /** footer start */
 // 关闭数据库链接，断开redis连接
-// app.use(async (ctx, next)=>{
+app.use(async (ctx, next)=>{
 	// await DBManager.quitClient('sql');
-	// await DBManager.quitClient('nosql');
-	// await DB_Redis.quitClient()
-	// await next();
-// });
+	await DBManager.quitClient('nosql');
+	await DB_Redis.quitClient()
+	await next();
+});
 
 app.use(async (ctx, next) => {
 	const rt_start = ctx.response.get('X-Response-Time-Start');
