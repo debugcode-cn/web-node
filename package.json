@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "cookies": "^0.8.0",
+    "he": "^1.2.0",
     "http-errors": "^1.7.3",
     "iconv-lite": "^0.5.1",
     "koa": "^2.12.0",
