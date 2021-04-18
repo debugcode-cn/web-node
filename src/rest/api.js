@@ -21,7 +21,7 @@ router.get('/testerr', async (ctx, next) => {
     await next();
 });
 router.get('/testmongodb', async (ctx, next) => {
-    let user = new userSchema({ name: 'ttt' });
+    let user = new UserSchema({ name: 'ttt' });
     let rrr = await user.save();
     console.log(typeof rrr, rrr)
     ctx.rest({ name: user.name, 'test111': true, 'api': 'testmongodb' });

@@ -3,7 +3,7 @@
 
 const path = require('path');
 const redis = require('redis');
-const params = require(path.join(BasePath,'config','params.redis.js'));
+const params = require(`../../config/params.redis.js`);
 const config = Object.assign({}, params, { detect_buffers: true }, {});
 
 class Redis{

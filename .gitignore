@@ -1,3 +1,6 @@
 /logs/
-/node_modules/
 /test/
+/dist/
+/build/
+/node_modules/
+.DS_Store

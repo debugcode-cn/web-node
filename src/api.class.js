@@ -3,7 +3,6 @@
 const path  = require('path');
 const UUID = require("uuid");
 const Koa = require('koa');
-const KoaStatic = require('koa-static');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
@@ -11,25 +10,23 @@ const createError = require('http-errors');
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
 global.ENV_Production = process.env.NODE_ENV === 'production';
-global.BasePath = __dirname;
-global.FrameWorkPath = path.join(BasePath, 'framework');
 global.SessionExpire = 20 * 60;
 // ==========================================引入核心模块======================================================
-const Model = require(path.join(FrameWorkPath, 'model.js'));
+const Model = require(`./framework/model.js`);
 Model.loadSQL();
 Model.loadNOSQL();
+const Rest = require(`./framework/rest.js`);
 // ============================================引入全局biz定义====================================================
-global.SBiz = require(path.join(BasePath , 'base', 'SBiz.js'));
-const Bizes = require(path.join(FrameWorkPath, 'biz.js'));
+global.SBiz = require(`./base/SBiz.js`);
+const Bizes = require(`./framework/biz.js`);
 Bizes.load();
 // ===========================================引入数据库驱动管理器=====================================================
-const DBManager = require(path.join(BasePath, 'db', 'DBManager.js'));
+const DBManager = require(`./db/DBManager.js`);
 // ============================================引入第三方组件--redis====================================================
-const LoadSessionFromRedis = require(path.join(BasePath,'components','session','redis.js'))
+const LoadSessionFromRedis = require(`./components/session/redis.js`)
 // ================================================================================================
-const Rest = require(path.join(BasePath, 'rest') );
 
-class WebApp{
+class ApiApp{
 	
 	/**
 	 * 创建数据库链接、定义模型
@@ -44,7 +41,7 @@ class WebApp{
 	}
 	async loadRedis(){
 		if(!global.DB_Redis){
-			const Redis = require(path.join(BasePath, 'db', 'redis', 'client.js'));
+			const Redis = require(`./db/redis/client.js`);
 			global.DB_Redis = new Redis();
 		}
 		await DB_Redis.createClient().catch((err)=>{
@@ -63,7 +60,7 @@ class WebApp{
 			multipart: true,
 			encoding: 'utf-8',
 			formidable:{
-				uploadDir: path.join(BasePath, 'upload'),
+				uploadDir: './upload',
 				keepExtensions: true,
 				maxFieldsSize: 5*1024*1024,
 				onFileBegin:(name, file)=>{
@@ -73,6 +70,7 @@ class WebApp{
 			}
 		}));
 		app.use(Rest.restify());
+		app.use(Rest.routes());
 		this.app = app;
 	}
 
@@ -102,7 +100,7 @@ class WebApp{
 	
 }
 
-let app = new WebApp();
-app.createDefaultApp().then(()=>{
-	app.run()
+let api = new ApiApp();
+api.createDefaultApp().then(()=>{
+	api.run()
 })

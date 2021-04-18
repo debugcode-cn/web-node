@@ -5,7 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const config = require(path.join(BasePath,'config','params.mongodb.js'));
+const config = require('../../config/params.mongodb.js');
 // let uri = 'mongodb://'+config.username+':'+config.password+'@'+config.host+':'+config.port+'/'+config.db+'?authSource=node' ;
 
 class Mongodb{

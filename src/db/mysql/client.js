@@ -3,7 +3,7 @@
 //固定mongodb数据库
 const path = require('path');
 const Sequelize = require('sequelize');
-const config = require(path.join(BasePath,'config','params.mysql.js'));
+const config = require('../../config/params.mysql.js');
 
 class Mysql{
     constructor(){

@@ -7,8 +7,8 @@
 const path =  require('path');
 const createError = require('http-errors');
 
-const ClientMysql = require(path.join(BasePath, 'db', 'mysql', 'client.js'));
-const ClientMongo = require(path.join(BasePath, 'db', 'mongodb', 'client.js'));
+const ClientMysql = require(`./mysql/client.js`);
+const ClientMongo = require(`./mongodb/client.js`);
 
 class DBManager{
 

@@ -2,11 +2,12 @@
   "name": "web-node",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "private": true,
   "scripts": {
-    "start": "pm2 startOrRestart pm2.json",
+    "start": "pm2 startOrRestart pm2-dist.json",
     "debug": "pm2 startOrRestart pm2.json --env dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./webpack/webpack.config.js"
   },
   "author": "wanglei",
   "license": "ISC",
@@ -31,5 +32,12 @@
     "sequelize": "^5.21.12",
     "uuid": "^8.1.0",
     "ws": "^7.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-node-externals": "^2.5.2"
   }
 }

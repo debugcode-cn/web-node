@@ -11,25 +11,21 @@ const createError = require('http-errors');
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
 global.ENV_Production = process.env.NODE_ENV === 'production';
-global.BasePath = __dirname;
-global.FrameWorkPath = path.join(BasePath, 'framework');
-global.ViewPath = path.join(BasePath,'view');
-
 global.SessionExpire = 20 * 60;
 // ==========================================引入核心模块======================================================
-const Model = require(path.join(FrameWorkPath, 'model.js'));
+const Model = require('./framework/model.js');
 Model.loadSQL();
 Model.loadNOSQL();
-const View = require(path.join(FrameWorkPath, 'view.js'));
-const Controller = require(path.join(FrameWorkPath, 'controller.js'));
+const View = require('./framework/view.js');
+const Controller = require('./framework/controller.js');
 // ============================================引入全局biz定义====================================================
-global.SBiz = require(path.join(BasePath , 'base', 'SBiz.js'));
-const Bizes = require(path.join(FrameWorkPath, 'biz.js'));
+global.SBiz = require(`./base/SBiz.js`);
+const Bizes = require('./framework/biz.js');
 Bizes.load();
 // ===========================================引入数据库驱动管理器=====================================================
-const DBManager = require(path.join(BasePath, 'db', 'DBManager.js'));
+const DBManager = require(`./db/DBManager.js`);
 // ============================================引入第三方组件--redis====================================================
-const LoadSessionFromRedis = require(path.join(BasePath,'components','session','redis.js'))
+const LoadSessionFromRedis = require(`./components/session/redis.js`)
 // ================================================================================================
 
 class WebApp{
@@ -47,7 +43,7 @@ class WebApp{
 	}
 	async loadRedis(){
 		if(!global.DB_Redis){
-			const Redis = require(path.join(BasePath, 'db', 'redis', 'client.js'));
+			const Redis = require(`./db/redis/client.js`);
 			global.DB_Redis = new Redis();
 		}
 		await DB_Redis.createClient().catch((err)=>{
@@ -61,13 +57,13 @@ class WebApp{
 		});
 		app.on('error', (err, ctx) => {console.error('app error',err.message)});
 		app.use(cors());
-		app.use(KoaStatic(BasePath));//建议加cdn
+		app.use(KoaStatic('./assets'));//建议加cdn
 		app.use(LoadSessionFromRedis());
 		app.use(KoaBody({
 			multipart: true,
 			encoding: 'utf-8',
 			formidable:{
-				uploadDir: path.join(BasePath, 'upload'),
+				uploadDir: './upload',
 				keepExtensions: true,
 				maxFieldsSize: 5*1024*1024,
 				onFileBegin:(name, file)=>{
@@ -76,7 +72,7 @@ class WebApp{
 				}
 			}
 		}));
-		app.use(View(ViewPath, {
+		app.use(View('./view', {
 			noCache: !ENV_Production,
 			watch: !ENV_Production
 		}));
@@ -102,7 +98,7 @@ class WebApp{
 	
 	// WebSocketServer
 	createSocketServer(){
-		require(path.join(BasePath,'components','websocket','wss.js'))(this.http_server);
+		require(`./components/websocket/wss.js`)(this.http_server);
 	}
 	
 	// 关闭数据库链接，断开redis连接

@@ -1,13 +1,13 @@
 {
     "apps": [
         {
-            "name": "node-web",
-            "script": "./src/web.class.js",
+            "name": "node-web-production",
+            "script": "./build/web.bundle.js",
             "cwd": "./",
             "args": "",
             "interpreter": "",
             "interpreter_args": "",
-            "watch": true,
+            "watch": false,
             "ignore_watch": [
                 "node_modules",
                 "logs",
@@ -27,19 +27,19 @@
             "cron_restart": "",
             "restart_delay": 1000,
             "instance_var":"NODE_APP_INSTANCE",
-            "env_dev": {
-                "NODE_ENV": "development",
-                "PORT": 9200
+            "env": {
+                "NODE_ENV": "production",
+                "PORT": 9100
             }
         },
         {
-            "name": "node-api",
-            "script": "./src/api.class.js",
+            "name": "node-api-production",
+            "script": "./build/api.bundle.js",
             "cwd": "./",
             "args": "",
             "interpreter": "",
             "interpreter_args": "",
-            "watch": true,
+            "watch": false,
             "ignore_watch": [
                 "node_modules",
                 "logs",
@@ -59,9 +59,9 @@
             "cron_restart": "",
             "restart_delay": 1000,
             "instance_var":"NODE_APP_INSTANCE",
-            "env_dev": {
-                "NODE_ENV": "development",
-                "PORT": 9201
+            "env": {
+               "NODE_ENV": "production",
+               "PORT": 9101
             }
         }
     ]
