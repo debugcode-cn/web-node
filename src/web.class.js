@@ -2,6 +2,7 @@
 // =========================================定义基本模块=======================================================
 const path  = require('path');
 const UUID = require("uuid");
+const morgan = require('koa-morgan');
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
 const KoaBody = require('koa-body');
@@ -57,7 +58,8 @@ class WebApp{
 		});
 		app.on('error', (err, ctx) => {console.error('app error',err.message)});
 		app.use(cors());
-		app.use(KoaStatic('./assets'));//建议加cdn
+		app.use(morgan('short'));
+		app.use(KoaStatic('./assets/'));//建议加cdn
 		app.use(LoadSessionFromRedis());
 		app.use(KoaBody({
 			multipart: true,
@@ -72,7 +74,7 @@ class WebApp{
 				}
 			}
 		}));
-		app.use(View('./view', {
+		app.use(View(path.join(__dirname,'view'), {
 			noCache: !ENV_Production,
 			watch: !ENV_Production
 		}));
@@ -115,4 +117,6 @@ class WebApp{
 let app = new WebApp();
 app.createDefaultApp().then(()=>{
 	app.run()
+}).catch((err)=>{
+	console.error(err.message);
 })

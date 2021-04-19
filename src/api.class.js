@@ -3,6 +3,7 @@
 const path  = require('path');
 const UUID = require("uuid");
 const Koa = require('koa');
+const morgan = require('koa-morgan');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
@@ -55,6 +56,7 @@ class ApiApp{
 		});
 		app.on('error', (err, ctx) => {console.error('app error',err.message)});
 		app.use(cors());
+		app.use(morgan('short'));
 		app.use(LoadSessionFromRedis());
 		app.use(KoaBody({
 			multipart: true,
@@ -103,4 +105,6 @@ class ApiApp{
 let api = new ApiApp();
 api.createDefaultApp().then(()=>{
 	api.run()
+}).catch((err)=>{
+	console.error(err.message);
 })
