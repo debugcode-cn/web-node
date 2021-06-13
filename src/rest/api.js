@@ -28,4 +28,12 @@ router.get('/testmongodb', async (ctx, next) => {
     await next();
 });
 
+router.post('/testpost', async (ctx, next) => {
+    console.log(ctx.query, ctx.request.query, ctx.request.body)
+    let body = ctx.request.body;
+    console.log(body.null === null, body.bool === false)
+    console.log(ctx.href)
+    ctx.rest({ 'test111': true, 'path': '/api/testpost' });
+    await next();
+});
 module.exports = router;

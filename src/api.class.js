@@ -11,6 +11,7 @@ const createError = require('http-errors');
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
 global.ENV_Production = process.env.NODE_ENV === 'production';
+global.ServerPort = process.env.PORT || 9001 ;
 global.SessionExpire = 20 * 60;
 // ==========================================引入核心模块======================================================
 const Model = require(`./framework/model.js`);
@@ -74,20 +75,23 @@ class ApiApp{
 		app.use(Rest.restify());
 		app.use(Rest.routes());
 		this.app = app;
+
+		await this.run();
 	}
 
 	async run(){
 		await this.loadDatabase();
 		await this.loadRedis();
 
-		let PORT = process.env.PORT || 9001 ;
-		let http_server = this.app.listen(PORT,()=>{
-			console.log('127.0.0.1:'+PORT+' 启动完成！')
+		this.http_server = this.app.listen(ServerPort,()=>{
+			console.log('api 127.0.0.1:'+ServerPort+' 启动完成！')
 		});
-		this.http_server = http_server;
-
-		process.on('beforeExit',()=>{
-			console.log('------exited and closeDatabase-----')
+		process.on('beforeExit', (code)=>{
+			console.log('---code---', code)
+			this.closeDatabase();
+		})
+		process.on('uncaughtException', (err)=>{
+			console.log('---err---', err)
 			this.closeDatabase();
 		})
 	}
@@ -99,12 +103,6 @@ class ApiApp{
 		await DB_Redis.quitClient()
 		await next();
 	}
-	
 }
 
-let api = new ApiApp();
-api.createDefaultApp().then(()=>{
-	api.run()
-}).catch((err)=>{
-	console.error(err.message);
-})
+new ApiApp().createDefaultApp()
