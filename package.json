@@ -13,7 +13,7 @@
   "author": "wanglei",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": ">=0.21.2",
     "cookies": "^0.8.0",
     "he": "^1.2.0",
     "http-errors": "^1.7.3",
