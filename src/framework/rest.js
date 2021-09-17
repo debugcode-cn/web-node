@@ -1,4 +1,3 @@
-
 const Router = require('koa-router')
 let router = new Router();
 
@@ -7,27 +6,22 @@ module.exports = {
         return async (ctx, next) => {
             // 是否是REST API前缀?
             if (ctx.request.path.startsWith('/api/')) {
-                // 绑定rest()方法:
-                ctx.rest = (data) => {
-                    ctx.response.type = 'application/json';
-                    ctx.response.body = data;
+                ctx.rest = (data = {}, code = 0, msg = 'ok') => {
+                    ctx.response.type = 'application/json; charset=utf-8';
+                    ctx.response.body = { code, msg, data };
                 }
-                ctx.restError = (code,message) => {
+                ctx.restError = (msg = '', code=-1, status = 400) => {
                     code = code || 'internal:unknown_error';
-                    message = message || '';
-                    ctx.response.status = 400;
-                    ctx.response.type = 'application/json';
-                    ctx.response.body = {
-                        code,
-                        message
-                    }
+                    ctx.response.status = status;
+                    ctx.response.type = 'application/json; charset=utf-8';
+                    ctx.response.body = { code, msg }
                 }
             }
             await next();
         }
     },
-    routes:()=>{
-        require(`${__dirname}/../rest/index.js`).map((subrouters,i)=>{
+    routes: () => {
+        require(`${__dirname}/../rest/index.js`).map((subrouters, i) => {
             router.use(subrouters.routes()).use(subrouters.allowedMethods());
         })
         return router.routes();

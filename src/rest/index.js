@@ -1,3 +1,4 @@
 module.exports = [
-    require('./api'),
+    require('./test'),
+    require('./file'),
 ]

@@ -19,6 +19,7 @@ class Redis{
                     resolve();
                 });
                 this.client.on('error',(err)=>{
+                    console.log('=======connect----redis-server====err===', err.message)
                     reject(err);
                 });
             }else{

@@ -6,8 +6,8 @@ module.exports = {
     mode: "production",
     target: "node",
     entry: {
-        api: path.resolve(__dirname, '..', 'src', 'api.class.js'),
-        web: path.resolve(__dirname, '..', 'src', 'web.class.js'),
+        api: path.resolve(__dirname, '..', 'src', 'api.server.js'),
+        web: path.resolve(__dirname, '..', 'src', 'web.server.js'),
     },
     output: {
         path: path.resolve(__dirname, '..', 'build'),

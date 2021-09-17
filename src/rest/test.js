@@ -17,7 +17,7 @@ router.get('/test2', async (ctx, next) => {
     await next();
 });
 router.get('/testerr', async (ctx, next) => {
-    ctx.restError('test:testerr', '测试错误接口1');
+    ctx.restError('test:testerr 测试错误接口1');
     await next();
 });
 router.get('/testmongodb', async (ctx, next) => {

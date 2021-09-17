@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "node-web",
-            "script": "./src/web.class.js",
+            "script": "./src/web.server.js",
             "cwd": "./",
             "args": "",
             "interpreter": "",
@@ -34,7 +34,7 @@
         },
         {
             "name": "node-api",
-            "script": "./src/api.class.js",
+            "script": "./src/api.server.js",
             "cwd": "./",
             "args": "",
             "interpreter": "",
