@@ -95,6 +95,10 @@ class ApiApp{
 			console.log('---err---', err)
 			this.closeDatabase();
 		})
+		process.on('SIGINT', (err)=>{
+			console.log('---err---', err)
+			this.closeDatabase();
+		})
 	}
 
 	// 关闭数据库链接，断开redis连接

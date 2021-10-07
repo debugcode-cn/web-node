@@ -103,6 +103,10 @@ class WebApp{
 			console.log('---err---', err)
 			this.closeDatabase();
 		})
+		process.on('SIGINT', (err)=>{
+			console.log('---err---', err)
+			this.closeDatabase();
+		})
 	}
 	
 	// WebSocketServer
