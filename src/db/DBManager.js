@@ -35,7 +35,7 @@ class DBManager{
             });
         }else if(driver == 'nosql' && MongodbClient){
             await MongodbClient.createClient().catch((err)=>{
-                throw createError(500, 'Unable to connect to the database '+dialect, {expose:true});
+                throw createError(500, 'Unable to connect to the database mongodb', {expose:true});
             });
         }else{
             throw createError(500, 'Unable to createClient ' + driver , {expose:true});

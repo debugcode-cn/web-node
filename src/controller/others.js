@@ -42,7 +42,6 @@ router.get('/testmongodb', async (ctx, next) => {
 });
 
 router.post('/openapi/xining/alert/test', async (ctx, next) => {
-    console.log('----------------------------------')
     try{
         let query = ctx.query;
         let headers = ctx.headers;
@@ -51,9 +50,7 @@ router.post('/openapi/xining/alert/test', async (ctx, next) => {
         console.log('value is ', (details.Fields.value)/1000000, details);
         ctx.response.body = JSON.stringify({name:'wl','test111':true,'api':'testmongodb'});
     }catch(e){
-        console.log(e);
         throw createError(400, e.message);
-        // ctx.response.body = e.message;
     }
     await next();
 });

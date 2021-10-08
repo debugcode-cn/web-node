@@ -78,7 +78,6 @@ module.exports = {
             let _model = defineSQLModel(sequelize_instance, table_name, model.attributes);
             if(!global[model_name]){
                 global[model_name] = _model; // 老生代内存
-                console.log('defineSql', model_name, _model)
             }
         }
     },
@@ -107,7 +106,6 @@ module.exports = {
             let model = mongoose.model(table_name, schema);
             if(!global[model_name]){
                 global[model_name] = model; // 老生代内存
-                console.log('defineNoSql', model_name, model)
             }
         }
     }

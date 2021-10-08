@@ -11,7 +11,9 @@
             "ignore_watch": [
                 "node_modules",
                 "logs",
-                "test"
+                "test",
+                "build",
+                "uploaded"
             ],
             "exec_mode": "cluster",
             "instances": 1,
@@ -43,7 +45,9 @@
             "ignore_watch": [
                 "node_modules",
                 "logs",
-                "test"
+                "test",
+                "build",
+                "uploaded"
             ],
             "exec_mode": "cluster",
             "instances": 3,

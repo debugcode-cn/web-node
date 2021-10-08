@@ -96,15 +96,15 @@ class WebApp{
 		this.createSocketServer();
 
 		process.on('beforeExit', (code)=>{
-			console.log('---code---', code)
+			console.log('---beforeExit code---', code)
 			this.closeDatabase();
 		})
 		process.on('uncaughtException', (err)=>{
-			console.log('---err---', err)
+			console.log('---uncaughtException err---', err)
 			this.closeDatabase();
 		})
 		process.on('SIGINT', (err)=>{
-			console.log('---err---', err)
+			console.log('---SIGINT err---', err)
 			this.closeDatabase();
 		})
 	}
@@ -119,7 +119,6 @@ class WebApp{
 		// await DBManager.quitClient('sql');
 		await DBManager.quitClient('nosql');
 		await DB_Redis.quitClient()
-		await next();
 	}
 }
 

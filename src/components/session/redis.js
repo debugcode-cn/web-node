@@ -44,8 +44,7 @@ module.exports = loadSessionFromRedis = ()=>{
             ctx.cookies.set(session_name, session_id, { signed: true });
     
         }).catch((err)=>{
-            console.log('err',err)
-            throw createError(500, 'session start error', {expose:true});
+            throw createError(500, 'session start error:'+err.message, {expose:true});
         })
         await next();
     }
