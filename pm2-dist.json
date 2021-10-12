@@ -24,11 +24,11 @@
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",
             "max_restarts": 1000,
-            "force":true,
+            "force": true,
             "autorestart": true,
             "cron_restart": "",
             "restart_delay": 1000,
-            "instance_var":"NODE_APP_INSTANCE",
+            "instance_var": "NODE_APP_INSTANCE",
             "env": {
                 "NODE_ENV": "production",
                 "PORT": 9100
@@ -58,15 +58,27 @@
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",
             "max_restarts": 1000,
-            "force":true,
+            "force": true,
             "autorestart": true,
             "cron_restart": "",
             "restart_delay": 1000,
-            "instance_var":"NODE_APP_INSTANCE",
+            "instance_var": "NODE_APP_INSTANCE",
             "env": {
-               "NODE_ENV": "production",
-               "PORT": 9101
+                "NODE_ENV": "production",
+                "PORT": 9101
             }
         }
-    ]
+    ],
+    "deploy": {
+        "production": {
+            "user": "wanglei",
+            "host": [
+                "192.168.31.34"
+            ],
+            "ref": "origin/master",
+            "repo": "https://github.com/debugcode-cn/web-node.git",
+            "path": "/var/www/web-node",
+            "post-deploy": "npm -v"
+        }
+    }
 }
