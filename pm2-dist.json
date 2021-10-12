@@ -77,7 +77,7 @@
             ],
             "ref": "origin/master",
             "repo": "https://github.com/debugcode-cn/web-node.git",
-            "path": "/var/www/web-node",
+            "path": "/home/wanglei/workspace/web-node-test",
             "post-deploy": "npm -v"
         }
     }
