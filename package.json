@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "pro": "pm2 startOrRestart pm2-dist.json",
+    "prod": "pm2 startOrRestart pm2-dist.json",
     "dev": "pm2 startOrRestart pm2.json --env dev",
     "debug": "node ./src/api.server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
