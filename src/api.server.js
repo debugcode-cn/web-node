@@ -1,4 +1,3 @@
-
 // =========================================定义基本模块=======================================================
 const path  = require('path');
 const UUID = require("uuid");
@@ -26,10 +25,12 @@ Bizes.load();
 const DBManager = require(`./db/DBManager.js`);
 // ============================================引入第三方组件--redis====================================================
 const LoadSessionFromRedis = require(`./components/session/redis.js`)
+// ============================================引入第三方组件--socket.io====================================================
+const SocketIO = require(`socket.io`);
 // ================================================================================================
 
+
 class ApiApp{
-	
 	/**
 	 * 创建数据库链接、定义模型
 	 */
@@ -50,7 +51,6 @@ class ApiApp{
 			throw createError(500, 'load redis error', {expose:true});
 		});
 	}
-
 	async createDefaultApp(){
 		const app = new Koa({
 			keys: CookieKeys
@@ -76,17 +76,15 @@ class ApiApp{
 		app.use(Rest.restify());
 		app.use(Rest.routes());
 		this.app = app;
-
 		await this.run();
 	}
-
 	async run(){
 		await this.loadDatabase();
 		await this.loadRedis();
-
 		this.http_server = this.app.listen(ServerPort,()=>{
 			console.log('api 127.0.0.1:'+ServerPort+' 启动完成！')
 		});
+		this.createSocketServer();
 		process.on('beforeExit', (code)=>{
 			console.log('---beforeExit code---', code)
 			this.closeDatabase();
@@ -100,7 +98,15 @@ class ApiApp{
 			this.closeDatabase();
 		})
 	}
-
+	createSocketServer(){
+		this.sio = new SocketIO.Server({});
+		this.sio.listen(this.http_server);
+		this.sio.on('connection', (p1,p2) => {
+			console.log('----api-server--socket-connected---')
+			console.log('----api-server---p1---', p1)
+			console.log('----api-server---p2---', p2)
+		});
+	}
 	// 关闭数据库链接，断开redis连接
 	async closeDatabase(){
 		// await DBManager.quitClient('sql');

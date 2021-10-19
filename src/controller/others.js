@@ -30,6 +30,18 @@ router.get('/wechat', async (ctx, next) => {
     }
     await next();
 });
+router.get('/socketio', async (ctx, next) => {
+    try{
+        ctx.state.where = {
+            'is':'adc'
+        }
+        await ctx.render('socketio.html',{test:{time:new Date().getTime()}});
+    }catch(e){
+        ctx.response.body = e.message;
+    }
+    await next();
+});
+
 router.get('/testmongodb', async (ctx, next) => {
     try{
         let ttt = new UserSchema({name:'ttt'});

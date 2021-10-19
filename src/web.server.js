@@ -28,6 +28,8 @@ Bizes.load();
 const DBManager = require(`./db/DBManager.js`);
 // ============================================引入第三方组件--redis====================================================
 const LoadSessionFromRedis = require(`./components/session/redis.js`)
+// ============================================引入第三方组件--socket.io====================================================
+const SocketIO = require(`socket.io`);
 // ================================================================================================
 
 class WebApp{
@@ -88,11 +90,9 @@ class WebApp{
 	async run(){
 		await this.loadDatabase();
 		await this.loadRedis();
-
 		this.http_server = this.app.listen(Server_Port,()=>{
 			console.log('web 127.0.0.1:'+Server_Port+' 启动完成！')
 		});
-
 		this.createSocketServer();
 
 		process.on('beforeExit', (code)=>{
@@ -109,9 +109,12 @@ class WebApp{
 		})
 	}
 	
-	// WebSocketServer
 	createSocketServer(){
-		require(`./components/websocket/wss.js`)(this.http_server);
+		const sio = new SocketIO.Server(this.http_server);
+		sio.on('connection', (socket) => {
+			console.log('----web-server--socket-connected---socket.id', socket.id)
+		});
+		// require(`./components/websocket/wss.js`)(this.http_server);//TODO remove me
 	}
 	
 	// 关闭数据库链接，断开redis连接
