@@ -6,8 +6,8 @@
   "scripts": {
     "prod": "pm2 startOrRestart pm2-dist.json",
     "beta": "pm2 startOrRestart pm2.json --env beta",
-    "dev": "nodemon --watch src src/api.server.js",
-    "dev-web": "nodemon --watch src src/web.server.js",
+    "dev": "nodemon --watch src --ignore src/web.server.js src/api.server.js",
+    "dev-web": "nodemon --watch src --ignore src/api.server.js src/web.server.js",
     "build": "webpack --config ./webpack/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

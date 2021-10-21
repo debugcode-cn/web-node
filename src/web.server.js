@@ -1,5 +1,7 @@
 
 // =========================================定义基本模块=======================================================
+const ServerPort = process.env.PORT || 9000 ;
+const ENV_Production = process.env.NODE_ENV === 'production';
 const path  = require('path');
 const UUID = require("uuid");
 const morgan = require('koa-morgan');
@@ -11,8 +13,6 @@ const createError = require('http-errors');
 // ==========================================定义全局变量====================================================
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
-global.ENV_Production = process.env.NODE_ENV === 'production';
-global.Server_Port = process.env.PORT || 9000 ;
 global.SessionExpire = 20 * 60;
 // ==========================================引入核心模块======================================================
 const Model = require('./framework/model.js');
@@ -90,8 +90,8 @@ class WebApp{
 	async run(){
 		await this.loadDatabase();
 		await this.loadRedis();
-		this.http_server = this.app.listen(Server_Port,()=>{
-			console.log('web 127.0.0.1:'+Server_Port+' 启动完成！')
+		this.http_server = this.app.listen(ServerPort,()=>{
+			console.log('web 127.0.0.1:'+ServerPort+' 启动完成！')
 		});
 		this.createSocketServer();
 

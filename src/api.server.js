@@ -1,4 +1,6 @@
 // =========================================定义基本模块=======================================================
+const ENV_Production = process.env.NODE_ENV === 'production';
+const ServerPort = process.env.PORT || 9001 ;
 const path  = require('path');
 const UUID = require("uuid");
 const Koa = require('koa');
@@ -9,8 +11,6 @@ const createError = require('http-errors');
 // ==========================================定义全局变量====================================================
 global.session_name = 'session_nid';
 global.CookieKeys = ['ewareartrat43tw4tfrf'];
-global.ENV_Production = process.env.NODE_ENV === 'production';
-global.ServerPort = process.env.PORT || 9001 ;
 global.SessionExpire = 20 * 60;
 // ==========================================引入核心模块======================================================
 const Model = require(`./framework/model.js`);
