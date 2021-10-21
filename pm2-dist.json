@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "node-web-production",
+            "name": "prod-web",
             "script": "./build/web.bundle.js",
             "cwd": "./",
             "args": "",
@@ -18,8 +18,8 @@
             "exec_mode": "cluster",
             "instances": 1,
             "max_memory_restart": "1024M",
-            "error_file": "./logs/www/web-err.log",
-            "out_file": "./logs/www/web-out.log",
+            "error_file": "./logs/prod-web/web-err.log",
+            "out_file": "./logs/prod-web/web-out.log",
             "merge_logs": true,
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",
@@ -35,7 +35,7 @@
             }
         },
         {
-            "name": "node-api-production",
+            "name": "prod-api",
             "script": "./build/api.bundle.js",
             "cwd": "./",
             "args": "",
@@ -52,8 +52,8 @@
             "exec_mode": "cluster",
             "instances": 3,
             "max_memory_restart": "1024M",
-            "error_file": "./logs/www/api-err.log",
-            "out_file": "./logs/www/api-out.log",
+            "error_file": "./logs/prod-api/api-err.log",
+            "out_file": "./logs/prod-api/api-out.log",
             "merge_logs": true,
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",

@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "node-web",
+            "name": "beta-web",
             "script": "./src/web.server.js",
             "cwd": "./",
             "args": "",
@@ -17,9 +17,9 @@
             ],
             "exec_mode": "cluster",
             "instances": 1,
-            "max_memory_restart": "1024M",
-            "error_file": "./logs/www/web-err.log",
-            "out_file": "./logs/www/web-out.log",
+            "max_memory_restart": "4096M",
+            "error_file": "./logs/beta-web/web-err.log",
+            "out_file": "./logs/beta-web/web-out.log",
             "merge_logs": true,
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",
@@ -29,13 +29,13 @@
             "cron_restart": "",
             "restart_delay": 1000,
             "instance_var":"NODE_APP_INSTANCE",
-            "env_dev": {
-                "NODE_ENV": "development",
+            "env_beta": {
+                "NODE_ENV": "beta",
                 "PORT": 9200
             }
         },
         {
-            "name": "node-api",
+            "name": "beta-api",
             "script": "./src/api.server.js",
             "cwd": "./",
             "args": "",
@@ -51,9 +51,9 @@
             ],
             "exec_mode": "cluster",
             "instances": 3,
-            "max_memory_restart": "1024M",
-            "error_file": "./logs/www/api-err.log",
-            "out_file": "./logs/www/api-out.log",
+            "max_memory_restart": "4096M",
+            "error_file": "./logs/beta-api/api-err.log",
+            "out_file": "./logs/beta-api/api-out.log",
             "merge_logs": true,
             "log_date_format": "YYYY-MM-DD HH:mm:ss",
             "min_uptime": "60s",
@@ -63,8 +63,8 @@
             "cron_restart": "",
             "restart_delay": 1000,
             "instance_var":"NODE_APP_INSTANCE",
-            "env_dev": {
-                "NODE_ENV": "development",
+            "env_beta": {
+                "NODE_ENV": "beta",
                 "PORT": 9201
             }
         }

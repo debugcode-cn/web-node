@@ -1,16 +1,17 @@
 {
   "name": "web-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "koa2-demo",
   "private": true,
   "scripts": {
     "prod": "pm2 startOrRestart pm2-dist.json",
-    "dev": "pm2 startOrRestart pm2.json --env dev",
-    "debug": "node ./src/api.server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./webpack/webpack.config.js"
+    "beta": "pm2 startOrRestart pm2.json --env beta",
+    "dev": "nodemon --watch src src/api.server.js",
+    "dev-web": "nodemon --watch src src/web.server.js",
+    "build": "webpack --config ./webpack/webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "wanglei",
+  "author": "debugcode",
   "license": "ISC",
   "dependencies": {
     "axios": ">=0.21.2",
@@ -58,5 +59,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "nodemonConfig": {
+    "ignore": ["build/*", "logs/*", "node_modules/*"],
+    "delay": 1000
   }
 }
