@@ -5,15 +5,15 @@ const router = new Router({
 });
 
 router.get('/test', async (ctx, next) => {
-    ctx.rest({ name: 'wlz', 'test': true, 'api': 'test' });
+    ctx.json({ name: 'wlz', 'test': true, 'api': 'test' });
     await next();
 });
 router.get('/test1', async (ctx, next) => {
-    ctx.rest({ name: 'wlz', 'test': true, 'api': 'test1' });
+    ctx.json({ name: 'wlz', 'test': true, 'api': 'test1' });
     await next();
 });
 router.get('/test2', async (ctx, next) => {
-    ctx.rest({ name: 'wlz', 'test': true, 'api': 'test2' });
+    ctx.json({ name: 'wlz', 'test': true, 'api': 'test2' });
     await next();
 });
 router.get('/testerr', async (ctx, next) => {
@@ -24,7 +24,7 @@ router.get('/testmongodb', async (ctx, next) => {
     let user = new UserSchema({ name: 'ttt' });
     let rrr = await user.save();
     console.log(typeof rrr, rrr)
-    ctx.rest({ name: user.name, 'test111': true, 'api': 'testmongodb' });
+    ctx.json({ name: user.name, 'test111': true, 'api': 'testmongodb' });
     await next();
 });
 
@@ -33,7 +33,7 @@ router.post('/testpost', async (ctx, next) => {
     let body = ctx.request.body;
     console.log(body.null === null, body.bool === false)
     console.log(ctx.href)
-    ctx.rest({ 'test111': true, 'path': '/api/testpost' });
+    ctx.json({ 'test111': true, 'path': '/api/testpost' });
     await next();
 });
 module.exports = router;

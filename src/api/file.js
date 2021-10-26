@@ -1,6 +1,3 @@
-/**
- * {@link ctx.rest}
- */
 const Router = require('koa-router')
 
 const router = new Router({
@@ -16,11 +13,11 @@ router.post('/upload/:id', async (ctx, next) => {
     console.log('files',ctx.request.files)
     console.log('headers',ctx.request.headers)
     // console.dir(ctx.request)
-    ctx.rest({ 'path': '/api/file/upload' });
+    ctx.json({ 'path': '/api/file/upload' });
     await next();
 });
 router.get('/download', async (ctx, next) => {
-    ctx.rest({ 'path': '/api/file/download' });
+    ctx.json({ 'path': '/api/file/download' });
     await next();
 });
 

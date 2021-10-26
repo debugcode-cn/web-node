@@ -25,9 +25,9 @@ global.SBiz = require(`./base/SBiz.js`);
 const Bizes = require('./framework/biz.js');
 Bizes.load();
 // ===========================================引入数据库驱动管理器=====================================================
-const DBManager = require(`./db/DBManager.js`);
+const DBManager = require(`./components/db-manager/index.js`);
 // ============================================引入第三方组件--redis====================================================
-const LoadSessionFromRedis = require(`./components/session/redis.js`)
+const LoadSessionFromRedis = require(`./components/redis-session`)
 // ============================================引入第三方组件--socket.io====================================================
 const SocketIO = require(`socket.io`);
 // ================================================================================================
@@ -38,16 +38,16 @@ class WebApp{
 	 * 创建数据库链接、定义模型
 	 */
 	async loadDatabase(){
-		// await DBManager.createDriver('sql')
+		await DBManager.createDriver('sql')
 		await DBManager.createDriver('nosql')
-		// await DBManager.createClient('sql');//TODO pay attention to new client per req
+		await DBManager.createClient('sql');//TODO pay attention to new client per req
 		await DBManager.createClient('nosql');//TODO pay attention to new client per req
-		// await Model.defineSql(DBManager.getClient('sql'));
+		await Model.defineSql(DBManager.getClient('sql'));
 		await Model.defineNoSql(DBManager.getClient('nosql'));
 	}
 	async loadRedis(){
 		if(!global.DB_Redis){
-			const Redis = require(`./db/redis/client.js`);
+			const Redis = require(`./components/db-manager/client-redis.js`);
 			global.DB_Redis = new Redis();
 		}
 		await DB_Redis.createClient().catch((err)=>{
@@ -119,7 +119,7 @@ class WebApp{
 	
 	// 关闭数据库链接，断开redis连接
 	async closeDatabase(){
-		// await DBManager.quitClient('sql');
+		await DBManager.quitClient('sql');
 		await DBManager.quitClient('nosql');
 		await DB_Redis.quitClient()
 	}

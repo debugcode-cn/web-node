@@ -6,7 +6,7 @@ const router = new Router({
 router.get('/test', async (ctx, next) => {
     ctx.state.index = 1;
     console.log(1,ctx.state)
-    ctx.rest({
+    ctx.json({
         done:true
     })
     console.log('next ', next.toString())

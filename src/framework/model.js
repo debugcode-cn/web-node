@@ -23,7 +23,7 @@ let defineSQLModel = (sequelize_instance, name, attributes)=> {
             attrs[key] = {
                 type: value,
                 allowNull: false
-            };
+            }
         }
     }
     attrs.created_at = {

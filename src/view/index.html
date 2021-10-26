@@ -16,7 +16,7 @@
             <div>Email: {{User.email}}</div>
             <div><a href="/user/signout">注销</a></div>
         {% else %}
-            <form action="/signup" method="post">
+            <form action="/user/signup" method="post">
                 <input name="email" type="email" />
                 <input name="password" type="password" />
                 <input type="submit" value="注册" />

@@ -4,9 +4,9 @@ let router = new Router();
 module.exports = {
     restify: () => {
         return async (ctx, next) => {
-            // 是否是REST API前缀?
+            // 是否是REST API前缀判断
             if (ctx.request.path.startsWith('/api/')) {
-                ctx.rest = (data = {}, code = 0, msg = 'ok') => {
+                ctx.json = (data = {}, code = 0, msg = 'ok') => {
                     ctx.response.type = 'application/json; charset=utf-8';
                     ctx.response.body = { code, msg, data };
                 }
@@ -21,7 +21,7 @@ module.exports = {
         }
     },
     routes: () => {
-        require(`${__dirname}/../rest/index.js`).map((subrouters, i) => {
+        require(`${__dirname}/../api/index.js`).map((subrouters, i) => {
             router.use(subrouters.routes()).use(subrouters.allowedMethods());
         })
         return router.routes();

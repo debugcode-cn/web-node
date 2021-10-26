@@ -1,5 +1,3 @@
-
-
 //固定mongodb数据库
 const path = require('path');
 const mongoose = require('mongoose');
@@ -14,7 +12,7 @@ class Mongodb{
     }
     createClient(){
         return new Promise((resolve, reject)=>{
-            let tt = mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true});
+            mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true});
             this.client =  mongoose.connection;
             this.client.setMaxListeners(0);
             this.client.on('connected',(a)=>{

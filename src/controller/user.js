@@ -10,7 +10,7 @@ const router = new Router({
     prefix: '/user'
 });
 
-router.get('/signup', async (ctx, next) => {
+router.post('/signup', async (ctx, next) => {
     const body = ctx.request.body;
     let email = body.email.trim();
     let password = body.password.trim();

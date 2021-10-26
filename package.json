@@ -8,7 +8,7 @@
     "beta": "pm2 startOrRestart pm2-beta.json --env beta",
     "dev-api": "nodemon --watch src --ignore src/web.server.js src/api.server.js",
     "dev-web": "nodemon --watch src --ignore src/api.server.js src/web.server.js",
-    "build": "webpack --config ./webpack/webpack.config.js",
+    "build": "webpack --config .webpack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "debugcode",

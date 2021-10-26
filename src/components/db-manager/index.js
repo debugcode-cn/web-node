@@ -7,11 +7,10 @@
 const path =  require('path');
 const createError = require('http-errors');
 
-const ClientMysql = require(`./mysql/client.js`);
-const ClientMongo = require(`./mongodb/client.js`);
+const ClientMysql = require(`./client-mysql.js`);
+const ClientMongo = require(`./client-mongodb.js`);
 
 class DBManager{
-
     static async createDriver(driver){
         if(driver == 'sql'){
             if(!global.MysqlClient){

@@ -1,7 +1,7 @@
 module.exports = {
-    host:'172.17.0.3',
-    port:'3306',
-    username:'root',
+    host:'192.168.3.11',
+    port:3306,
+    username:'wanglei',
     password:'mnbvcxz@123',
-    database:'test'
+    database:'web-node'
 }
