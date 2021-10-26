@@ -15,5 +15,12 @@ module.exports = {
     },
     externals: [
         externals()
+    ],
+    module:{
+
+    },
+    plugins: [
+        
     ]
+
 }
