@@ -1,6 +1,6 @@
 
 // =========================================定义基本模块=======================================================
-const ServerPort = process.env.PORT || 9000 ;
+const ServerPort = process.env.PORT ;
 const ENV_Production = process.env.NODE_ENV === 'production';
 const path  = require('path');
 const UUID = require("uuid");
@@ -61,7 +61,7 @@ class WebApp{
 		});
 		app.on('error', (err, ctx) => {console.error('app error',err.message)});
 		app.use(cors());
-		app.use(morgan('short'));
+		app.use(morgan('dev'));
 		app.use(KoaStatic('./assets/'));//建议加cdn
 		app.use(LoadSessionFromRedis());
 		app.use(KoaBody({
@@ -113,7 +113,14 @@ class WebApp{
 		const sio = new SocketIO.Server(this.http_server);
 		sio.on('connection', (socket) => {
 			console.log('----web-server--socket-connected---socket.id', socket.id)
-		});
+		}).on('data', (data)=>{
+			console.log('----web-server--socket-data', data)
+		})
+		sio.of('namespace2').on('connection', (socket)=>{
+			console.log('----web-server--namespace2-connected---socket.id', socket.id)
+		}).on('data', (data)=>{
+			console.log('----web-server--namespace2-data', data)
+		})
 		// require(`./components/websocket/wss.js`)(this.http_server);//TODO remove me
 	}
 	

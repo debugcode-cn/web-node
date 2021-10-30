@@ -31,7 +31,7 @@
             "instance_var": "NODE_APP_INSTANCE",
             "env": {
                 "NODE_ENV": "production",
-                "PORT": 9100
+                "PORT": 9200
             }
         },
         {
@@ -65,7 +65,7 @@
             "instance_var": "NODE_APP_INSTANCE",
             "env": {
                 "NODE_ENV": "production",
-                "PORT": 9101
+                "PORT": 9201
             }
         }
     ],

@@ -1,6 +1,6 @@
 // =========================================定义基本模块=======================================================
 const ENV_Production = process.env.NODE_ENV === 'production';
-const ServerPort = process.env.PORT || 9001 ;
+const ServerPort = process.env.PORT;
 const path  = require('path');
 const UUID = require("uuid");
 const Koa = require('koa');
