@@ -3,6 +3,7 @@
 
 const WebSocket = require('ws');
 const Cookies = require('cookies');
+const constants = require('../../consts/index');
 
 module.exports = function WebSocketServer(http_server){
     const wss = new WebSocket.Server({
@@ -18,7 +19,7 @@ module.exports = function WebSocketServer(http_server){
             return ws.close(4001, 'Invalid headers');
         }
         let cookies = new Cookies(request,{},{keys:CookieKeys});
-        let session_nid = cookies.get(session_name, { signed: true });
+        let session_nid = cookies.get(constants.session_name, { signed: true });
         if(!session_nid){
             return ws.close(4001, 'Invalid cookie');
         }

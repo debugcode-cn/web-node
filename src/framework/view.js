@@ -2,7 +2,7 @@
 const nunjucks = require('nunjucks');
 
 function createEnv(path, opts) {
-    var autoescape = opts.autoescape === undefined ? true : opts.autoescape,
+    let autoescape = opts.autoescape === undefined ? true : opts.autoescape,
         noCache = opts.noCache || false,
         watch = opts.watch || false,
         throwOnUndefined = opts.throwOnUndefined || false,
@@ -24,7 +24,7 @@ function createEnv(path, opts) {
 
 module.exports = (path, opts) => {
     // 创建Nunjucks的env对象:
-    var env = createEnv(path, opts);
+    let env = createEnv(path, opts);
     return async (ctx, next) => {
         ctx.render = function (view, model) {
             // 把render后的内容赋值给response.body:

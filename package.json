@@ -7,7 +7,7 @@
     "prod": "pm2 startOrRestart pm2-dist.json",
     "beta": "pm2 startOrRestart pm2-beta.json --env beta",
     "dev": "pm2 startOrRestart pm2-dev.json --env dev",
-    "dev-api": "nodemon --watch src --ignore src/web.server.js src/api.server.js",
+    "dev-api": "nodemon src/api.server.js --watch src --ignore src/web.server.js src/api.server.js",
     "dev-web": "nodemon --watch src --ignore src/api.server.js src/web.server.js",
     "build": "webpack --config .webpack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,7 @@
   "author": "debugcode",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.8.0",
     "axios": ">=0.21.2",
     "cookies": "^0.8.0",
     "he": "^1.2.0",
@@ -32,7 +33,7 @@
     "needle": "^2.5.0",
     "nunjucks": "^3.2.1",
     "pm2": "^4.4.0",
-    "redis": "^3.0.2",
+    "redis": "^4.0.3",
     "sequelize": "^5.21.12",
     "socket.io": "^4.3.1",
     "uuid": "^8.1.0",

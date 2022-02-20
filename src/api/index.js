@@ -1,5 +1,6 @@
 module.exports = [
     require('./test'),
     require('./file'),
-    require('./state')
+    require('./state'),
+    require('./stream')
 ]

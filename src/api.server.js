@@ -9,9 +9,7 @@ const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
 // ==========================================定义全局变量====================================================
-global.session_name = 'session_nid';
-global.CookieKeys = ['ewareartrat43tw4tfrf'];
-global.SessionExpire = 20 * 60;
+const constants = require('./consts/index')
 // ==========================================引入核心模块======================================================
 const Model = require(`./framework/model.js`);
 Model.loadSQL();
@@ -53,7 +51,7 @@ class ApiApp{
 	}
 	async createDefaultApp(){
 		const app = new Koa({
-			keys: CookieKeys
+			keys: constants.CookieKeys
 		});
 		app.on('error', (err, ctx) => {console.error('app error',err.message)});
 		app.use(cors());

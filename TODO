@@ -16,3 +16,8 @@
 
 #20210613
 1、实现modules中的hello-world---忽略20211026
+
+
+#20220220
+1、web服务只使用mysql数据库；api只使用mongodb数据库
+2、两个服务使用独立的认证，mongodb使用ak/sk认证方式（token)

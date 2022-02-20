@@ -1,12 +1,13 @@
 const createError = require('http-errors');
 const UUID = require("uuid");
+const constants = require('../../consts/index');
 
 // cookie session cache(redis)
 // set session_nid and set User;
 
 module.exports = loadSessionFromRedis = ()=>{
     return async (ctx, next)=>{
-        let session_id = ctx.cookies.get(session_name, {signed:true});
+        let session_id = ctx.cookies.get(constants.session_name, {signed:true});
         await new Promise((resolve, reject)=>{
             if(!session_id){
                 resolve();
@@ -38,10 +39,10 @@ module.exports = loadSessionFromRedis = ()=>{
                 }
             }
             DB_Redis.getClient().hmset(session_id, session);
-            DB_Redis.getClient().expire(session_id, SessionExpire );
+            DB_Redis.getClient().expire(session_id, constants.SessionExpire );
     
             global.session = session;
-            ctx.cookies.set(session_name, session_id, { signed: true });
+            ctx.cookies.set(constants.session_name, session_id, { signed: true });
     
         }).catch((err)=>{
             throw createError(500, 'session start error:'+err.message, {expose:true});

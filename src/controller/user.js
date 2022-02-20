@@ -5,6 +5,7 @@
  */
 const createError = require('http-errors');
 const Router = require('koa-router')
+const constants = require('../consts/index');
 
 const router = new Router({
     prefix: '/user'
@@ -37,7 +38,7 @@ router.post('/signup', async (ctx, next) => {
             });
             session.user_id = user_plain.id;
             DB_Redis.getClient().hmset(session.id, session);
-            DB_Redis.getClient().expire(session.id, SessionExpire);
+            DB_Redis.getClient().expire(session.id, constants.SessionExpire);
             ctx.redirect('/');
         }).catch((err) => {
             throw createError(500, '注册失败');
@@ -57,7 +58,7 @@ router.post('/signin', async (ctx, next) => {
             });
             session.user_id = user_plain.id;
             DB_Redis.getClient().hmset(session.id, session);
-            DB_Redis.getClient().expire(session.id, SessionExpire);
+            DB_Redis.getClient().expire(session.id, constants.SessionExpire);
             ctx.redirect('/');
         } else {
             throw createError(400, '用户不存在或密码错误');
@@ -73,7 +74,7 @@ router.get('/signout', async (ctx, next) => {
         if (user) {
             let user_plain = user.get({ plain: true });
             DB_Redis.getClient().expire(session.id, 0);
-            ctx.cookies.set(session_name, '', { signed: true, expires: 0 });
+            ctx.cookies.set(constants.session_name, '', { signed: true, expires: 0 });
             session = null;
             delete ctx.state.User;
             ctx.redirect('/');
