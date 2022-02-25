@@ -21,3 +21,43 @@
 #20220220
 1、web服务只使用mysql数据库；api只使用mongodb数据库
 2、两个服务使用独立的认证，mongodb使用ak/sk认证方式（token)
+
+
+#20220225
+面试题
+一、node
+0、nodejs自带的模块熟悉的有哪些
+1、Buffer，buffer将字符串abc转成base64,如何实现
+2、Stream Node.js 中基本的流类型有哪些
+2.1、Stream 大文件复制一般是如何操作的
+3、URL 如何获取网址的主机地址，协议名
+
+3、js有用过哪些设计模式
+    你知道的有哪些  单例模式,适配器模式,装饰模式,观察者模式
+    EventEmitter 有用过吗？
+
+3.ts的访问修饰符有哪些（三个 public private protected ) 成员变量和方法默认是使用的哪个？
+
+4、web框架熟悉哪个，koa和express的区别
+1.1 如何获取请求网址，并获取网址中的域名，协议等信息
+4.1、API接口的鉴权认证是如何设计实现的
+
+4、redis
+    数据类型有哪些
+    用哪个命令移除列表的一个头或尾元素 lpop rpop
+    订阅发布有用过吗
+
+5、mysql的表结构设计过吗
+    有哪些关键点需要考虑吗
+
+6、mongodb的对象关系模型mongoose熟悉吗
+7、mongoose
+   有没有用过模型实例的save方法，Mixed类型的字段中如果有个属性被修改了，直接save能不能成功
+
+
+8、时序数据库Prometheus
+有了解过influxdb这款时序数据库吗，讲一下行协议
+每个数据点在行协议中至少需要一个field
+
+Dockerfile常用命令 from 
+

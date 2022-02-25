@@ -18,7 +18,7 @@ module.exports = function WebSocketServer(http_server){
         if(!headers){
             return ws.close(4001, 'Invalid headers');
         }
-        let cookies = new Cookies(request,{},{keys:CookieKeys});
+        let cookies = new Cookies(request,{},{keys:constants.CookieKeys});
         let session_nid = cookies.get(constants.session_name, { signed: true });
         if(!session_nid){
             return ws.close(4001, 'Invalid cookie');

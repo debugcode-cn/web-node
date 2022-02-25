@@ -7,10 +7,11 @@
     "prod": "pm2 startOrRestart pm2-dist.json",
     "beta": "pm2 startOrRestart pm2-beta.json --env beta",
     "dev": "pm2 startOrRestart pm2-dev.json --env dev",
-    "dev-api": "nodemon src/api.server.js --watch src --ignore src/web.server.js src/api.server.js",
+    "dev-api": "nodemon --watch src --ignore src/web.server.js src/api.server.js",
+    "inspect-api": "nodemon --watch src --ignore src/web.server.js --inspect src/api.server.js",
     "dev-web": "nodemon --watch src --ignore src/api.server.js src/web.server.js",
-    "build": "webpack --config .webpack.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "inspect-web": "nodemon --watch src --ignore src/api.server.js --inspect src/web.server.js",
+    "build": "webpack --config .webpack.js"
   },
   "author": "debugcode",
   "license": "ISC",
