@@ -71,7 +71,7 @@ class WebApp{
 				maxFieldsSize: 5*1024*1024,
 				onFileBegin:(name, file)=>{
 					// console.log('onFileBegin', name, file)
-					// file.path = '/data/www/web-node/upload/upload_8test.jpg';//此处可以修改file来做修改的，比如按照年/月/日创建层级目录
+					//TODO file.path = '/data/www/web-node/upload/upload_8test.jpg';//此处可以修改file来做修改的，比如按照年/月/日创建层级目录
 				}
 			}
 		}));

@@ -1,7 +1,7 @@
 {
   "name": "web-node",
   "version": "1.0.0",
-  "description": "koa2-demo",
+  "description": "koa2-grow",
   "private": false,
   "scripts": {
     "prod": "pm2 startOrRestart pm2-dist.json",
@@ -74,6 +74,52 @@
       "logs/*",
       "node_modules/*"
     ],
+    "verbose": true,
     "delay": 1000
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true
+    },
+    "extends": [
+      "plugin:react/recommended",
+      "standard"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "allowImportExportEverywhere": true
+    },
+    "plugins": [
+      "react",
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-undefined": [
+        1
+      ],
+      "no-unused-vars": [
+        1
+      ],
+      "no-console": [
+        1
+      ],
+      "node/no-unsupported-features/es-syntax": [
+        1
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "stage-3",
+      "es2017"
+    ]
   }
 }
