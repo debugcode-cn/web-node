@@ -16,6 +16,7 @@
   "author": "debugcode",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^8.0.0",
     "amqplib": "^0.8.0",
     "axios": ">=0.21.2",
     "cookies": "^0.8.0",
