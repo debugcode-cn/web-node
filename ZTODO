@@ -65,3 +65,13 @@ Dockerfile常用命令 from
 #20220226
 1、添加日志埋点-用于在线分析系统运行时
 2、选择时序数据库influxdb或者其他同类型的
+
+
+
+# koa
+1、中间件之间传递数据
+可以通过建议共享的命名空间ctx.state绑定属性值,也可以通过await netxt()返回值获取下一个中间件的return的值
+
+
+#参考pm2 graceful stop and start
+https://pm2.keymetrics.io/docs/usage/signals-clean-restart/

@@ -1,7 +1,5 @@
-/logs/
-/test/
 /dist/
-/build/
+/logs/
 /node_modules/
 .DS_Store
-/**/uploaded
+/src/assets/uploaded/*

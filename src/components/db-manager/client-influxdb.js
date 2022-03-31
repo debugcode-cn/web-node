@@ -22,23 +22,34 @@ curl -G 'http://localhost:8086/query' --data-urlencode "db=deluge" --data-urlenc
 curl -G http://localhost:8086/query --data-urlencode "u=todd" --data-urlencode "p=influxdb4ever" --data-urlencode "q=SHOW DATABASES"
 
  */
-class InfluxDB{
-    constructor(){
+const influx = require('influx');
+const params = require('../../config/params.influxdb');
 
-    }
-    query(){
-        return []
-    }
-    write(){
-        return true
-    }
-    test(){
-        return true;
-    }
+const InfluxClient = new influx.InfluxDB({
+	host: params.host,
+	port: params.port,
+	username: params.username,
+	password: params.password,
+	database: params.database||'_internal'
+});
 
-    info(){
-        return {}
-    }
+class InfluxDB {
+	constructor() {
+
+	}
+	query() {
+		return []
+	}
+	write() {
+		return true
+	}
+	test() {
+		return true;
+	}
+
+	info() {
+		return {}
+	}
 
 }
 module.exports = InfluxDB

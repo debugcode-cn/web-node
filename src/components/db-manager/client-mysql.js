@@ -1,38 +1,36 @@
-
-
-//固定mongodb数据库
-const path = require('path');
+//固定mysql数据库
 const Sequelize = require('sequelize');
 const config = require('../../config/params.mysql.js');
 
-class Mysql{
-    constructor(){
-        this.client = null;
-    }
-    createClient(){
-        this.client = new Sequelize(config.database, config.username, config.password, {
-            host: config.host,
-            port: config.port,
-            dialect: 'mysql',
-            timezone:'+08:00',
-            pool: {
-                max: 10,
-                min: 0,
-                acquire: 30000,
-                idle: 10000
-            }
-        });
-    }
-    quitClient(){
-        if(this.client){
-            this.client.close().then(()=>{
-                this.client = null;
-            })
-        }
-    }
-    getClient(){
-        return this.client;
-    }
+const base_name = __filename.replace(__dirname,'');
+
+const instance = new Sequelize(config.database, config.username, config.password, {
+	host: config.host,
+	port: config.port,
+	dialect: 'mysql',
+	timezone:'+08:00',
+	pool: {
+		max: 10,
+		min: 0,
+		acquire: 30000,
+		idle: 10000
+	}
+});
+
+function close(sth){
+	console.log(base_name, 'process event sth', sth);
+	if(!instance){
+		return;
+	}
+	try {
+		instance.close()
+	} catch (error) {
+		// 
+	}
 }
 
-module.exports = Mysql;
+
+process.on('uncaughtException', close)
+process.on('SIGINT', close)
+
+module.exports = instance;

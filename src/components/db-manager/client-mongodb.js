@@ -1,38 +1,28 @@
 //固定mongodb数据库
-const path = require('path');
+const config = require('../../config/params.mongodb.js');
+const base_name = __filename.replace(__dirname,'');
+
 const mongoose = require('mongoose');
+mongoose.set('setDefaultsOnInsert', true);// 如果upsert选项为true，在新建时插入文档定义的默认值
+mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connection.on('error', function (err) {
+	console.error('MongoDB connection error: ' + err);
+	process.exit(1);
+});
+mongoose.connection.setMaxListeners(0);
 mongoose.Promise = global.Promise;
 
-const config = require('../../config/params.mongodb.js');
-// let uri = 'mongodb://'+config.username+':'+config.password+'@'+config.host+':'+config.port+'/'+config.db+'?authSource=node' ;
 
-class Mongodb{
-    constructor(){
-        this.client = null;
-    }
-    createClient(){
-        return new Promise((resolve, reject)=>{
-            mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true});
-            this.client =  mongoose.connection;
-            this.client.setMaxListeners(0);
-            this.client.on('connected',(a)=>{
-                resolve();
-            });
-            this.client.on('error',(err)=>{
-                reject(err);
-            });
-        })
-    }
-    quitClient(){
-        if(this.client){
-            this.client.close((err)=>{
-                this.client = null;
-            });
-        }
-    }
-    getClient(){
-        return this.client;
-    }
+function close(sth){
+	try {
+		console.log(base_name, 'process event sth', sth);
+		mongoose.connection.close()
+	} catch (error) {
+		// 
+	}
 }
 
-module.exports = Mongodb;
+process.on('uncaughtException', close)
+process.on('SIGINT', close)
+
+module.exports = mongoose.connection;
