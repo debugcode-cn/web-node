@@ -1,0 +1,77 @@
+
+20210321
+1、将 app.js 改写成class的方式
+    启动的时候使用 new WebNode().createWebApp()
+
+2、将数据库初始化、redis初始化单独放在启动过程中，而不是api请求中
+
+
+#20210419
+1、添加webpack打包 --- ok
+
+2、分开两个项目，将rest api完全分离开
+
+3、前端打包的时候需要单独把资源复制到出口目录中
+
+
+#20210613
+1、实现modules中的hello-world---忽略20211026
+
+
+#20220220
+1、web服务只使用mysql数据库；api只使用mongodb数据库
+2、两个服务使用独立的认证，mongodb使用ak/sk认证方式（token)
+
+
+#20220225
+面试题
+一、node
+0、nodejs自带的模块熟悉的有哪些
+1、Buffer，buffer将字符串abc转成base64,如何实现
+2、Stream Node.js 中基本的流类型有哪些
+2.1、Stream 大文件复制一般是如何操作的
+3、URL 如何获取网址的主机地址，协议名
+
+3、js有用过哪些设计模式
+    你知道的有哪些  单例模式,适配器模式,装饰模式,观察者模式
+    EventEmitter 有用过吗？
+
+3.ts的访问修饰符有哪些（三个 public private protected ) 成员变量和方法默认是使用的哪个？
+
+4、web框架熟悉哪个，koa和express的区别
+1.1 如何获取请求网址，并获取网址中的域名，协议等信息
+4.1、API接口的鉴权认证是如何设计实现的
+
+4、redis
+    数据类型有哪些
+    用哪个命令移除列表的一个头或尾元素 lpop rpop
+    订阅发布有用过吗
+
+5、mysql的表结构设计过吗
+    有哪些关键点需要考虑吗
+
+6、mongodb的对象关系模型mongoose熟悉吗
+7、mongoose
+   有没有用过模型实例的save方法，Mixed类型的字段中如果有个属性被修改了，直接save能不能成功
+
+
+8、时序数据库Prometheus
+有了解过influxdb这款时序数据库吗，讲一下行协议
+每个数据点在行协议中至少需要一个field
+
+Dockerfile常用命令 from 
+
+
+#20220226
+1、添加日志埋点-用于在线分析系统运行时
+2、选择时序数据库influxdb或者其他同类型的
+
+
+
+# koa
+1、中间件之间传递数据
+可以通过建议共享的命名空间ctx.state绑定属性值,也可以通过await netxt()返回值获取下一个中间件的return的值
+
+
+#参考pm2 graceful stop and start
+https://pm2.keymetrics.io/docs/usage/signals-clean-restart/
