@@ -1,6 +1,8 @@
+// let uri = 'mongodb://'+config.username+':'+config.password+'@'+config.host+':'+config.port+'/'+config.db+'?authSource=node' ;
+
 module.exports = {
     port:27017,
-    host: '127.0.0.1',
-    db:'factorybi-dev',
-    uri:'mongodb://127.0.0.1:27017/factorybi-dev',
+    host: '192.168.3.25',
+    db:'web-node',
+    uri:'mongodb://192.168.3.25:27017/web-node',
 }

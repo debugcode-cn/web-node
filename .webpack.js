@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack')
 const externals = require('webpack-node-externals')
 
 module.exports = {
@@ -10,7 +9,7 @@ module.exports = {
         web: path.resolve(__dirname, 'src', 'web.server.js'),
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'dist'),
         filename: "[name].bundle.js"
     },
     externals: [
@@ -22,5 +21,4 @@ module.exports = {
     plugins: [
         
     ]
-
 }

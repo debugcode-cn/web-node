@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 
 const MODEL_SUFFIX_NOSQL = 'Schema';
 const MODEL_SUFFIX_SQL = 'Model';
@@ -7,7 +5,7 @@ const MODEL_SUFFIX_SQL = 'Model';
 const mongoose = require('mongoose');
 const Sequelize = require('sequelize');
 
-let defineSQLModel = (sequelize_instance, name, attributes)=> {
+const defineSQLModel = (sequelize_instance, name, attributes)=> {
     let attrs = {};
     attrs.id = {
         type: Sequelize.INTEGER(11),
@@ -55,7 +53,7 @@ let defineSQLModel = (sequelize_instance, name, attributes)=> {
 //输出模型
 module.exports = {
     loadSQL:()=>{
-        let modelMap = require(`${__dirname}/../model/index.js`);
+        let modelMap = require(`../model/index.js`);
         this.sql_list = []
         for (const name in modelMap) {
             if (Object.hasOwnProperty.call(modelMap, name)) {
@@ -83,7 +81,7 @@ module.exports = {
     },
 
     loadNOSQL :()=>{
-        let schemaMap = require(`${__dirname}/../schema/index.js`);
+        let schemaMap = require(`../schema/index.js`);
         this.nosql_list = [];
         for (const name in schemaMap) {
             if (Object.hasOwnProperty.call(schemaMap, name)) {
@@ -98,7 +96,7 @@ module.exports = {
             }
         }
     },
-    defineNoSql : async (mongoose_instance)=>{
+    defineNoSql : async ()=>{
         for(let i =  0 ; i < this.nosql_list.length ; i ++){
             let model_name = this.nosql_list[i].model_name;
             let table_name = this.nosql_list[i].table_name;
@@ -109,5 +107,10 @@ module.exports = {
             }
         }
     }
-
 }
+
+// Model.loadSQL();
+// Model.loadNOSQL();
+
+// Model.defineSql();
+// Model.defineNoSql();

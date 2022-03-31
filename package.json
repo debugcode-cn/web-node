@@ -1,17 +1,17 @@
 {
   "name": "web-node",
   "version": "1.0.0",
-  "description": "koa2-grow",
+  "description": "Node for Web",
   "private": false,
   "scripts": {
-    "prod": "pm2 startOrRestart pm2-dist.json",
-    "beta": "pm2 startOrRestart pm2-beta.json --env beta",
-    "dev": "pm2 startOrRestart pm2-dev.json --env dev",
-    "dev-api": "nodemon --watch src --ignore src/web.server.js src/api.server.js",
-    "inspect-api": "nodemon --watch src --ignore src/web.server.js --inspect src/api.server.js",
-    "dev-web": "nodemon --watch src --ignore src/api.server.js src/web.server.js",
-    "inspect-web": "nodemon --watch src --ignore src/api.server.js --inspect src/web.server.js",
-    "build": "webpack --config .webpack.js"
+    "api": "cross-env NODE_ENV=development PORT=10091 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' src/api.server.js",
+    "web": "cross-env NODE_ENV=development PORT=10092 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' src/web.server.js",
+    "niapi": "cross-env NODE_ENV=development PORT=10093 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' --inspect src/api.server.js",
+    "niweb": "cross-env NODE_ENV=development PORT=10094 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' --inspect src/web.server.js",
+    "pdev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
+    "ptest": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
+    "pstart": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
+    "build": "cross-env NODE_ENV=production webpack --config .webpack.js"
   },
   "author": "debugcode",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "he": "^1.2.0",
     "http-errors": "^1.7.3",
     "iconv-lite": "^0.5.1",
+    "influx": "^5.9.3",
     "koa": "^2.12.0",
     "koa-body": "^4.1.3",
     "koa-morgan": "^1.0.1",
@@ -36,7 +37,7 @@
     "nunjucks": "^3.2.1",
     "pm2": "^4.4.0",
     "redis": "^4.0.3",
-    "sequelize": "^5.21.12",
+    "sequelize": "^6.17.0",
     "socket.io": "^4.3.1",
     "uuid": "^8.1.0",
     "ws": "^7.3.0"
@@ -46,14 +47,16 @@
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
     "babel-loader": "^8.2.2",
-    "eslint": "^7.32.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.12.0",
     "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.26.1",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
+    "nodemon": "^2.0.15",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0",
     "webpack-node-externals": "^2.5.2"
@@ -68,15 +71,6 @@
       "eslint --fix",
       "git add"
     ]
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "build/*",
-      "logs/*",
-      "node_modules/*"
-    ],
-    "verbose": true,
-    "delay": 1000
   },
   "eslintConfig": {
     "env": {
@@ -115,6 +109,10 @@
         1
       ]
     }
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "delay": 1000
   },
   "babel": {
     "presets": [
