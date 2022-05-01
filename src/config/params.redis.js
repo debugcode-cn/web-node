@@ -1,7 +1,7 @@
 // V4
 // 'redis://alice:foobared@192.168.3.25:6379',
 module.exports = {
-	url: 'redis://192.168.3.25:6379',
+    url: 'redis://192.168.3.25:6379',
 };
 
 // V3

@@ -1,6 +1,6 @@
 module.exports = [
-	require('./cookie'),
-	require('./needle'),
-	require('./others'),
-	require('./user'),
+    require('./cookie'),
+    require('./needle'),
+    require('./others'),
+    require('./user'),
 ];

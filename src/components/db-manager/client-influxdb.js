@@ -26,27 +26,27 @@ const influx = require('influx');
 const params = require('../../config/params.influxdb');
 
 const InfluxClient = new influx.InfluxDB({
-	host: params.host,
-	port: params.port,
-	username: params.username,
-	password: params.password,
-	database: params.database || '_internal',
+    host: params.host,
+    port: params.port,
+    username: params.username,
+    password: params.password,
+    database: params.database || '_internal',
 });
 
 class InfluxDB {
-	constructor() {}
-	query() {
-		return [];
-	}
-	write() {
-		return true;
-	}
-	test() {
-		return true;
-	}
+    constructor() {}
+    query() {
+        return [];
+    }
+    write() {
+        return true;
+    }
+    test() {
+        return true;
+    }
 
-	info() {
-		return {};
-	}
+    info() {
+        return {};
+    }
 }
 module.exports = InfluxDB;

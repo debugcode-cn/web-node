@@ -1,57 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>app</title>
-		<script
-			src="https://cdn.socket.io/4.3.2/socket.io.min.js"
-			integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
-			crossorigin="anonymous"
-		></script>
-	</head>
+    <head>
+        <meta charset="UTF-8" />
+        <title>app</title>
+        <script
+            src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+            integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+            crossorigin="anonymous"
+        ></script>
+    </head>
 
-	<body>
-		<input type="text" id="input" />
-		<button id="btn">send</button>
-		<div id="content-wrap"></div>
-	</body>
-	<script>
-		window.onload = () => {
-			let inputValue = null;
-			let socket = io('http://127.0.0.1:9000');
-			let internal = null;
-			socket.on('connect', () => {
-				console.log('socket connected', new Date().toLocaleString(), socket.id); // x8WIv7-mJelg7on_ALbx
-				// internal = setInterval(()=>{
-				//     socket.send('socket hi')
-				// },1000)
-			});
-			socket.on('disconnect', () => {
-				console.log(new Date().toLocaleString(), socket.connected); // false
-				console.log('disconnect---', new Date().toLocaleString(), socket.id); // undefined
-				clearInterval(internal);
-			});
-			let socket2 = io('http://127.0.0.1:9000/namespace2');
-			let internal2 = null;
-			socket2.on('connect', () => {
-				console.log(
-					'socket2 connected',
-					new Date().toLocaleString(),
-					socket2.id
-				); // x8WIv7-mJelg7on_ALbx
-				// internal2 = setInterval(()=>{
-				//     socket2.send('socket2 hi')
-				// },1000)
-			});
-			socket2.on('disconnect', () => {
-				console.log(new Date().toLocaleString(), socket2.connected); // false
-				console.log(
-					'disconnect---socket2',
-					new Date().toLocaleString(),
-					socket2.id
-				); // undefined
-				clearInterval(internal2);
-			});
-		};
-	</script>
+    <body>
+        <input type="text" id="input" />
+        <button id="btn">send</button>
+        <div id="content-wrap"></div>
+    </body>
+    <script>
+        window.onload = () => {
+            let inputValue = null;
+            let socket = io('http://127.0.0.1:9000');
+            let internal = null;
+            socket.on('connect', () => {
+                console.log(
+                    'socket connected',
+                    new Date().toLocaleString(),
+                    socket.id
+                ); // x8WIv7-mJelg7on_ALbx
+                // internal = setInterval(()=>{
+                //     socket.send('socket hi')
+                // },1000)
+            });
+            socket.on('disconnect', () => {
+                console.log(new Date().toLocaleString(), socket.connected); // false
+                console.log(
+                    'disconnect---',
+                    new Date().toLocaleString(),
+                    socket.id
+                ); // undefined
+                clearInterval(internal);
+            });
+            let socket2 = io('http://127.0.0.1:9000/namespace2');
+            let internal2 = null;
+            socket2.on('connect', () => {
+                console.log(
+                    'socket2 connected',
+                    new Date().toLocaleString(),
+                    socket2.id
+                ); // x8WIv7-mJelg7on_ALbx
+                // internal2 = setInterval(()=>{
+                //     socket2.send('socket2 hi')
+                // },1000)
+            });
+            socket2.on('disconnect', () => {
+                console.log(new Date().toLocaleString(), socket2.connected); // false
+                console.log(
+                    'disconnect---socket2',
+                    new Date().toLocaleString(),
+                    socket2.id
+                ); // undefined
+                clearInterval(internal2);
+            });
+        };
+    </script>
 </html>

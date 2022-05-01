@@ -1,51 +1,61 @@
 <html>
-	<head>
-		<meta content="text/html; charset=utf-8" http-equiv="content-type" />
-		<link rel="icon" href="/favicon.ico" sizes="32x32" />
-		<link
-			rel="stylesheet"
-			href="/assets/css/bootstrap.min.css"
-			type="text/css"
-		/>
-	</head>
-	<body>
-		<h1>{{where.is}}</h1>
-		<h2>hello world</h2>
-		<h1>{{test.time}}</h1>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link
+            rel="stylesheet"
+            href="/assets/css/bootstrap.min.css"
+            type="text/css"
+        />
+    </head>
+    <body>
+        <h1>{{where.is}}</h1>
+        <h2>hello world</h2>
+        <h1>{{test.time}}</h1>
 
-		<div><a target="blank" href="/wechat">聊天室</a></div>
-		<div><a target="blank" href="/socketio">聊天室2</a></div>
+        <div><a target="blank" href="/wechat">聊天室</a></div>
+        <div><a target="blank" href="/socketio">聊天室2</a></div>
 
-		{% if User %}
-		<div>Email: {{User.email}}</div>
-		<div><a href="/user/signout">注销</a></div>
-		{% else %}
-		<form action="/user/signup" method="post">
-			<input name="email" type="email" />
-			<input name="password" type="password" />
-			<input type="submit" value="注册" />
-		</form>
-		<form action="/user/signin" method="post">
-			<input name="email" type="email" />
-			<input name="password" type="password" />
-			<input type="submit" value="登录" />
-		</form>
-		{% endif %}
+        {% if User %}
+        <div>Email: {{User.email}}</div>
+        <div><a href="/user/signout">注销</a></div>
+        {% else %}
+        <form action="/user/signup" method="post">
+            <input name="email" type="email" />
+            <input name="password" type="password" />
+            <input type="submit" value="注册" />
+        </form>
+        <form action="/user/signin" method="post">
+            <input name="email" type="email" />
+            <input name="password" type="password" />
+            <input type="submit" value="登录" />
+        </form>
+        {% endif %}
 
-		<form enctype="multipart/form-data" action="/consultSubmit" method="post">
-			<input name="email" type="email" />
-			<input name="password" type="password" />
-			<input type="file" name="file1" />
-			<input type="submit" />
-		</form>
+        <form
+            enctype="multipart/form-data"
+            action="/consultSubmit"
+            method="post"
+        >
+            <input name="email" type="email" />
+            <input name="password" type="password" />
+            <input type="file" name="file1" />
+            <input type="submit" />
+        </form>
 
-		<img src="/assets/image/github.jpg" alt="wanglei" />
-		<img src="/assets/image/knex-loader-blue.png" alt="knex-loader-blue.png" />
+        <img src="/assets/image/github.jpg" alt="wanglei" />
+        <img
+            src="/assets/image/knex-loader-blue.png"
+            alt="knex-loader-blue.png"
+        />
 
-		<script
-			type="text/javascript"
-			src="/assets/js/jquery-3.5.1.min.js"
-		></script>
-		<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-	</body>
+        <script
+            type="text/javascript"
+            src="/assets/js/jquery-3.5.1.min.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="/assets/js/bootstrap.min.js"
+        ></script>
+    </body>
 </html>
