@@ -1,21 +1,22 @@
 # web-node
+
 node web by koa2
 
-项目使用koa2框架开发mvc模式的web引用
+项目使用 koa2 框架开发 mvc 模式的 web 引用
 
-使用pm2管理多进程
+使用 pm2 管理多进程
 
-登录session信息使用redis服务器单独存储
+登录 session 信息使用 redis 服务器单独存储
 
-普通数据使用mysql，sequelize进行对象关系映射
+普通数据使用 mysql，sequelize 进行对象关系映射
 
-包含websocket引用、测试程序
+包含 websocket 引用、测试程序
 
-提供rest接口
+提供 rest 接口
 
-引入mongoose，尚未定义对应表规则
+引入 mongoose，尚未定义对应表规则
 
 使用长连接：redis、mysql、mongodb
 
-查看MySQL通信连接信息
+查看 MySQL 通信连接信息
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'

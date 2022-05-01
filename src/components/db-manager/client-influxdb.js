@@ -30,26 +30,23 @@ const InfluxClient = new influx.InfluxDB({
 	port: params.port,
 	username: params.username,
 	password: params.password,
-	database: params.database||'_internal'
+	database: params.database || '_internal',
 });
 
 class InfluxDB {
-	constructor() {
-
-	}
+	constructor() {}
 	query() {
-		return []
+		return [];
 	}
 	write() {
-		return true
+		return true;
 	}
 	test() {
 		return true;
 	}
 
 	info() {
-		return {}
+		return {};
 	}
-
 }
-module.exports = InfluxDB
+module.exports = InfluxDB;

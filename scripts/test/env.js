@@ -1,11 +1,13 @@
-console.log(process.env)
+console.log(process.env);
 
 module.exports = {
-	apps: [{
-		script: 'scripts/env.js',
-		watch: '.',
-		exec_mode : "cluster"
-	}],
+	apps: [
+		{
+			script: 'scripts/env.js',
+			watch: '.',
+			exec_mode: 'cluster',
+		},
+	],
 
 	deploy: {
 		production: {
@@ -15,9 +17,9 @@ module.exports = {
 			repo: 'GIT_REPOSITORY',
 			path: 'DESTINATION_PATH',
 			'pre-deploy-local': '',
-			'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
-			'pre-setup': ''
-		}
-	}
+			'post-deploy':
+				'npm install && pm2 reload ecosystem.config.js --env production',
+			'pre-setup': '',
+		},
+	},
 };
-

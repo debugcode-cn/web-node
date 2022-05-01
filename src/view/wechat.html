@@ -1,23 +1,24 @@
 <html>
-    <head>
-        <meta content="text/html; charset=utf-8" http-equiv="content-type">
-        <link rel="icon" href="/favicon.ico" sizes="32x32">
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css" />
-    </head>
-    <body>
-        
-        {%  if User %}
-            <div>Email: {{User.email}}</div>
-        {% else %}
-            
-        {% endif %}
-        <img src="/sinaimg" alt="telangpu" />
-        <img src="/assets/image/knex-loader-blue.png" alt="knex-loader-blue.png" />
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link
+			rel="stylesheet"
+			href="/assets/css/bootstrap.min.css"
+			type="text/css"
+		/>
+	</head>
+	<body>
+		{% if User %}
+		<div>Email: {{User.email}}</div>
+		{% else %} {% endif %}
+		<img src="/sinaimg" alt="telangpu" />
+		<img src="/assets/image/knex-loader-blue.png" alt="knex-loader-blue.png" />
 
-        <textarea></textarea>
+		<textarea></textarea>
 
-        <script src="/assets/js/jquery-3.5.1.min.js" ></script>
-        <script src="/assets/js/bootstrap.min.js" ></script>
-        <script type="module" src="/assets/js/websocket.js"></script>
-    </body>
+		<script src="/assets/js/jquery-3.5.1.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script type="module" src="/assets/js/websocket.js"></script>
+	</body>
 </html>
