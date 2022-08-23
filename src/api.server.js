@@ -13,10 +13,6 @@ const { CookieSession } = require('./constant');
 // ==========================================引入核心模块======================================================
 const Model = require(`./framework/model.js`);
 const Rest = require(`./framework/api.js`);
-// ============================================引入全局biz定义====================================================
-global.SBiz = require(`./base/SBiz.js`);
-const Bizes = require(`./framework/biz.js`);
-Bizes.load();
 // ===========================================引入数据库驱动管理器=====================================================
 const DBManager = require(`./components/db-manager/index.js`);
 // ===========================================引入socket=====================================================

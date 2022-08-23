@@ -75,3 +75,9 @@ Dockerfile常用命令 from
 
 #参考pm2 graceful stop and start
 https://pm2.keymetrics.io/docs/usage/signals-clean-restart/
+
+
+
+#develop2
+1、加载所有路由
+2、调整模型定义

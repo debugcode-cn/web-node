@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // 定义属性
-const UserSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     name: String,
     namenick: String,
     email: String,
@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // 定义方法
-UserSchema.methods.speak = function () {
+schema.methods.speak = function () {
     const greeting = this.name
         ? 'Meow name is ' + this.name
         : "I don't have a name";
@@ -17,6 +17,6 @@ UserSchema.methods.speak = function () {
 };
 
 module.exports = {
-    name: 'user',
-    schema: UserSchema,
+    name: 'pet',
+    schema: schema,
 };

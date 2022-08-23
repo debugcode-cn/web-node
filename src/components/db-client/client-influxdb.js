@@ -23,7 +23,7 @@ curl -G http://localhost:8086/query --data-urlencode "u=todd" --data-urlencode "
 
  */
 const influx = require('influx');
-const params = require('../../config/params.influxdb');
+const params = require('../../config/config.influxdb');
 
 const InfluxClient = new influx.InfluxDB({
     host: params.host,

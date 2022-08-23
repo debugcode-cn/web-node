@@ -1,6 +1,6 @@
 //固定mysql数据库
 const Sequelize = require('sequelize');
-const config = require('../../config/params.mysql.js');
+const config = require('../../config/config.mysql.js');
 
 const base_name = __filename.replace(__dirname, '');
 

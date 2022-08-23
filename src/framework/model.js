@@ -111,9 +111,3 @@ module.exports = {
         }
     },
 };
-
-// Model.loadSQL();
-// Model.loadNOSQL();
-
-// Model.defineSql();
-// Model.defineNoSql();

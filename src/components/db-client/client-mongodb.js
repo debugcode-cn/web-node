@@ -1,5 +1,5 @@
 //固定mongodb数据库
-const config = require('../../config/params.mongodb.js');
+const config = require('../../config/config.mongodb.js');
 const base_name = __filename.replace(__dirname, '');
 
 const mongoose = require('mongoose');

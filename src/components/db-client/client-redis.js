@@ -2,7 +2,7 @@
 
 const redis = require('redis'); //v4
 const EventEmitter = require('events').EventEmitter;
-const params = require(`../../config/params.redis.js`);
+const params = require(`../../config/config.redis.js`);
 const base_name = __filename.replace(__dirname, '');
 
 class EventRedisKeyExpired extends EventEmitter {

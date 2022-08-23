@@ -1,6 +1,4 @@
-const Sequelize = require('sequelize');
-
 module.exports = {
-    Pet: require('./PetModel'),
-    User: require('./UserModel'),
+    Role: require('./role.model'),
+    User: require('./user.model'),
 };
