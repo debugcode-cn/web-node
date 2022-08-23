@@ -44,6 +44,7 @@ class SocketIO {
         this.sio.bind(server);
         this._buildWeb();
     }
+
     _buildWeb() {
         this.sio
             .on('connection', (socket) => {

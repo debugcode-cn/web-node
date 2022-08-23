@@ -1,6 +1,8 @@
-// api请求中间件
+/**
+ * REST API中间件
+ */
 module.exports = async (ctx, next) => {
-    // 是否是REST API前缀判断
+    // 前缀判断
     if (ctx.request.path.startsWith('/api/')) {
         ctx.json = (data = {}, code = 0, msg = 'ok') => {
             ctx.response.type = 'application/json; charset=utf-8';

@@ -1,3 +1,6 @@
+/**
+ * 渲染模板中间件
+ */
 const nunjucks = require('nunjucks');
 
 function createEnv(path, opts) {
