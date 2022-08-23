@@ -1,0 +1,6 @@
+{
+	"editor.formatOnType": true,
+	"editor.formatOnSave": true,
+	"prettier.useTabs": false,
+	"workbench.tree.indent": 4
+}

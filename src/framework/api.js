@@ -1,4 +1,4 @@
-const Router = require('koa-router')
+const Router = require('koa-router');
 let router = new Router();
 
 module.exports = {
@@ -9,21 +9,21 @@ module.exports = {
                 ctx.json = (data = {}, code = 0, msg = 'ok') => {
                     ctx.response.type = 'application/json; charset=utf-8';
                     ctx.response.body = { code, msg, data };
-                }
-                ctx.restError = (msg = '', code=-1, status = 400) => {
+                };
+                ctx.restError = (msg = '', code = -1, status = 400) => {
                     code = code || 'internal:unknown_error';
                     ctx.response.status = status;
                     ctx.response.type = 'application/json; charset=utf-8';
-                    ctx.response.body = { code, msg }
-                }
+                    ctx.response.body = { code, msg };
+                };
             }
             await next();
-        }
+        };
     },
     routes: () => {
         require(`${__dirname}/../api/index.js`).map((subrouters, i) => {
             router.use(subrouters.routes()).use(subrouters.allowedMethods());
-        })
+        });
         return router.routes();
-    }
-}
+    },
+};

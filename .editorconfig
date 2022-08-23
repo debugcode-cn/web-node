@@ -9,7 +9,7 @@ end_of_line = lf
 # 在最后一行后自动插入新的空行
 insert_final_newline = false
 charset = utf-8
-indent_style = tab
+indent_style = space
 
 [*.{js,py}]
 indent_size = 4

@@ -2,6 +2,5 @@
  * 定义基本的模型操作类
  */
 
-class SBiz{
-}
+class SBiz {}
 module.exports = SBiz;

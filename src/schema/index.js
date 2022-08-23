@@ -1,4 +1,3 @@
-
 module.exports = {
-    User:require('./UserSchema')
-}
+    User: require('./pet.mongo'),
+};
