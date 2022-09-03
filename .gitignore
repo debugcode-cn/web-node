@@ -2,4 +2,5 @@
 /logs/
 /node_modules/
 .DS_Store
+.husky
 /src/assets/uploaded/*
