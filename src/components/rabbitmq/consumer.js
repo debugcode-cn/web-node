@@ -14,9 +14,9 @@ class RabbitmqConsumer extends Channel {
         channel_receiver.consume(this.queue, (msg) => {
             if (msg !== null) {
                 console.log('Recieved:', msg.content.toString());
-                if (Date.now() % 2 == 0) {
-                    channel_receiver.ack(msg);
-                }
+                // if (Date.now() % 2 == 0) {
+                channel_receiver.ack(msg);
+                // }
             } else {
                 console.log('Consumer cancelled by server');
             }
