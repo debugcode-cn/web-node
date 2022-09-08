@@ -8,11 +8,9 @@
     "scripts": {
         "api": "cross-env NODE_ENV=development PORT=10091 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' src/api.server.js",
         "web": "cross-env NODE_ENV=development PORT=10092 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' src/web.server.js",
-        "niapi": "cross-env NODE_ENV=development PORT=10093 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' --inspect src/api.server.js",
-        "niweb": "cross-env NODE_ENV=development PORT=10094 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' --inspect src/web.server.js",
-        "pdev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
-        "ptest": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
-        "pstart": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
+        "pm2-dev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
+        "pm2-test": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
+        "pm2": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
         "build": "cross-env NODE_ENV=production webpack --config .webpack.js",
         "prepare": "husky install"
     },
