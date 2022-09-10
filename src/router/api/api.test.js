@@ -1,8 +1,6 @@
 const Router = require('koa-router');
 
-const router = new Router({
-    prefix: '/api',
-});
+const router = new Router();
 
 router.get('/test', async (ctx, next) => {
     ctx.json({ name: 'wlz', test: true, api: 'test' });

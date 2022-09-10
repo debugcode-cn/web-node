@@ -6,7 +6,7 @@
 5. 使用websocket进行前后端消息传输
 6. 提供api接口
 7. 提供前端页面渲染（非前后端分离支持）
----
+
 # 启动说明
 #### 启动API接口服务，占用端口 10091
 ```
@@ -43,4 +43,10 @@ npm run build
 #### 查看 MySQL 通信连接信息
 ```
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+```
+
+#### 随手记：用于判断是通过require执行的还是直接命令行执行的
+```
+const Execed = require.main === module
+console.log(Execed)
 ```

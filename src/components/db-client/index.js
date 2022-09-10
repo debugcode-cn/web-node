@@ -21,6 +21,10 @@ class DBManager {
             throw createError(500, 'Unable to connect to the database mongodb', { expose: true });
         }
     }
+    static close(callback) {
+        const mongoose = require('mongoose');
+        mongoose.connection.close(callback);
+    }
 }
 
 module.exports = DBManager;

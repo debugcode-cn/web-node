@@ -3,23 +3,8 @@ const util = require('util');
 const HE = require('he');
 const createError = require('http-errors');
 const Router = require('koa-router');
-const router = new Router({
-    prefix: '',
-});
-router.get('/', async (ctx, next) => {
-    try {
-        // let user = await ctx.UserBiz.create(Date.now());
-        ctx.state.where = {
-            is: 'adc',
-        };
-        await ctx.render('index.html', {
-            test: { time: new Date().getTime() },
-        });
-    } catch (e) {
-        ctx.response.body = e.message;
-    }
-    await next();
-});
+const router = new Router();
+
 router.get('/wechat', async (ctx, next) => {
     try {
         // let user = await ctx.UserBiz.create(Date.now());

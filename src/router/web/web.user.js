@@ -4,7 +4,7 @@
  */
 const createError = require('http-errors');
 const Router = require('koa-router');
-const { CookieSession } = require('../constant');
+const { CookieSession } = require('../../constant');
 
 const router = new Router({
     prefix: '/user',
