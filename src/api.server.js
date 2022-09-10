@@ -1,4 +1,4 @@
-// =========================================定义基本模块=======================================================
+// =========================================定义基本模块============================================
 const ENV_Production = process.env.NODE_ENV === 'production';
 const ServerPort = process.env.PORT;
 const path = require('path');
@@ -8,19 +8,18 @@ const morgan = require('koa-morgan');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
-// ==========================================定义全局变量====================================================
+// ==========================================定义全局变量===========================================
 const { CookieSession } = require('./constant');
-// ==========================================引入核心模块======================================================
-const Model = require(`./framework/model.js`);
-const Rest = require(`./framework/api.js`);
-// ===========================================引入数据库驱动管理器=====================================================
-const DBManager = require(`./components/db-manager/index.js`);
-// ===========================================引入socket=====================================================
+// ==========================================引入核心模块===========================================
+const SBiz = require('./base/SBiz');
+// ===========================================引入数据库驱动管理器===================================
+const DBManager = require(`./components/db-client/index.js`);
+// ===========================================引入socket===========================================
 const SocketIO = require(`./components/socket/socket-io`);
 const WebSocket = require(`./components/socket/websocket/wss`);
-// ============================================引入redis====================================================
-const ClientRedis = require(`./components/db-manager/client-redis.js`);
-const RedisBiz = require(`./biz/RedisBiz`);
+// ============================================引入redis===========================================
+const ClientRedis = require(`./components/db-client/client-redis.js`);
+const RedisBiz = require(`./biz/Redis.biz`);
 // ================================================================================================
 
 class ApiApp {
@@ -28,15 +27,8 @@ class ApiApp {
      * 创建数据库链接、定义模型
      */
     async initDatabase() {
-        // no sql
-        await DBManager.loadNoSql();
-        Model.loadNOSQL();
-        Model.defineNoSql();
-
-        // sql
-        let instance = await DBManager.loadSql();
-        Model.loadSQL();
-        Model.defineSql(instance);
+        await DBManager.connectMongodb();
+        SBiz.setMysqlInstance(await DBManager.connectMysql());
     }
 
     async initRedis() {
@@ -75,8 +67,7 @@ class ApiApp {
             })
         );
 
-        app.use(Rest.restify());
-        app.use(Rest.routes());
+        // app.use(Rest.routes());
 
         this.app = app;
 
@@ -91,9 +82,9 @@ class ApiApp {
         this.http_server = this.app.listen(ServerPort, () => {
             console.log(
                 '【api】 127.0.0.1:' +
-                    ServerPort +
-                    ' 启动完成！进程号：' +
-                    process.pid
+                ServerPort +
+                ' 启动完成！进程号：' +
+                process.pid
             );
         });
     }

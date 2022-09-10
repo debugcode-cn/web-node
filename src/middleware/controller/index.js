@@ -1,10 +1,10 @@
-const Router = require('koa-router');
-let router = new Router();
-
+/**
+ * REST API中间件
+ */
 module.exports = {
-    restify: () => {
+    api: () => {
         return async (ctx, next) => {
-            // 是否是REST API前缀判断
+            // 前缀判断
             if (ctx.request.path.startsWith('/api/')) {
                 ctx.json = (data = {}, code = 0, msg = 'ok') => {
                     ctx.response.type = 'application/json; charset=utf-8';
@@ -19,11 +19,5 @@ module.exports = {
             }
             await next();
         };
-    },
-    routes: () => {
-        require(`${__dirname}/../api/index.js`).map((subrouters, i) => {
-            router.use(subrouters.routes()).use(subrouters.allowedMethods());
-        });
-        return router.routes();
-    },
+    }
 };

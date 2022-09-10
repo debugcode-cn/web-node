@@ -1,33 +1,24 @@
 const createError = require('http-errors');
 
 class DBManager {
-    static async loadSql() {
+    // 获取mysql连接实例
+    static async connectMysql() {
         const dialect_mysql = require(`./client-mysql.js`);
-        return await dialect_mysql
-            .authenticate()
-            .catch((err) => {
-                throw createError(
-                    500,
-                    'Unable to connect to the database mysql',
-                    {
-                        expose: true,
-                    }
-                );
-            })
-            .then(() => dialect_mysql);
+        await dialect_mysql.authenticate().catch((err) => {
+            throw createError(500, 'Unable to connect to the database mysql', { expose: true });
+        });
+        console.log('连接mysql成功');
+        return dialect_mysql;
     }
-    static async loadNoSql() {
+
+    // 创建mongodb连接
+    static async connectMongodb() {
         try {
-            const dialect_mongo = require(`./client-mongodb.js`);
+            const dialect_mongo = require('./client-mongodb.js');
+            console.log('连接mongodb成功');
             return dialect_mongo;
         } catch (error) {
-            throw createError(
-                500,
-                'Unable to connect to the database mongodb',
-                {
-                    expose: true,
-                }
-            );
+            throw createError(500, 'Unable to connect to the database mongodb', { expose: true });
         }
     }
 }

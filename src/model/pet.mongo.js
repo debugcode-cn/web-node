@@ -10,13 +10,8 @@ const schema = new mongoose.Schema({
 
 // 定义方法
 schema.methods.speak = function () {
-    const greeting = this.name
-        ? 'Meow name is ' + this.name
-        : "I don't have a name";
+    const greeting = this.name ? 'Meow name is ' + this.name : "I don't have a name";
     console.log(greeting);
 };
 
-module.exports = {
-    name: 'pet',
-    schema: schema,
-};
+module.exports = mongoose.model('pet', schema);

@@ -32,8 +32,11 @@ const amqplib = require('amqplib');
 (async () => {
     const Consumer = require('./consumer');
     const Publisher = require('./publisher');
-    const consumer = new Consumer('maclei_queue_1');
-    const publisher = new Publisher('maclei_queue_1');
-    consumer.do();
+    const exchange = 'amqp.direct.test1';
+    const queue = 'maclei_queue_1';
+    const publisher = new Publisher(queue, exchange);
     // publisher.do();
+
+    const consumer = new Consumer(queue, exchange);
+    consumer.do();
 })();

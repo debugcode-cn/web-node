@@ -6,8 +6,9 @@ const amqplib = require('amqplib');
 const config = require('../../config/config.rabbitmq');
 
 class RabbitmqChannel {
-    constructor(queue) {
-        this.queue = String(queue);
+    constructor(queue, exchange) {
+        this.queue = String(queue || '');
+        this.exchange = String(exchange || '');
     }
     async createChannel() {
         if (!config.username) {

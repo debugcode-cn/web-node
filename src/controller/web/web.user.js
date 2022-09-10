@@ -19,37 +19,33 @@ router.post('/signup', async (ctx, next) => {
     if (!email || !password) {
         throw createError(400, 'params less');
     }
-    await UserModel.findOne({ where: { email: email } })
-        .then((user) => {
-            if (user) {
-                console.log(
-                    'findOne user',
-                    user.get({
-                        plain: true,
-                    })
-                );
-                throw createError(400, '邮箱已存在');
-            }
-        })
-        .then(() => {
-            return UserModel.create({
-                namenick: 'User' + timestamp,
-                email: email,
-                password: password,
-            })
-                .then((user) => {
-                    let user_plain = user.get({
-                        plain: true,
-                    });
-                    session.user_id = user_plain.id;
-                    DB_Redis.hset(session.id, session);
-                    DB_Redis.expire(session.id, CookieSession.SessionExpire);
-                    ctx.redirect('/');
+    await UserModel.findOne({ where: { email: email } }).then((user) => {
+        if (user) {
+            console.log(
+                'findOne user',
+                user.get({
+                    plain: true,
                 })
-                .catch((err) => {
-                    throw createError(500, '注册失败');
-                });
+            );
+            throw createError(400, '邮箱已存在');
+        }
+    }).then(() => {
+        return UserModel.create({
+            namenick: 'User' + timestamp,
+            email: email,
+            password: password,
+        }).then((user) => {
+            let user_plain = user.get({
+                plain: true,
+            });
+            session.user_id = user_plain.id;
+            global.DB_Redis.hset(session.id, session);
+            global.DB_Redis.expire(session.id, CookieSession.SessionExpire);
+            ctx.redirect('/');
+        }).catch((err) => {
+            throw createError(500, '注册失败');
         });
+    });
     await next();
 });
 router.post('/signin', async (ctx, next) => {

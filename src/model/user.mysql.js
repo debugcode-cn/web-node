@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const SBiz = require('../base/SBiz');
 
 module.exports = {
     name: 'user',
@@ -26,4 +27,8 @@ module.exports = {
             allowNull: true,
         },
     },
+    options: {}
 };
+
+module.exports = SBiz.defineSequelizeModel(SBiz.getMysqlInstance(), schema.name, schema.attributes, schema.options || {});
+

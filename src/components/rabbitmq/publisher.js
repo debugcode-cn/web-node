@@ -7,8 +7,8 @@
 const Channel = require('./channel');
 
 class RabbitmqPublisher extends Channel {
-    constructor(queue) {
-        super(queue);
+    constructor(queue, exchange) {
+        super(queue, exchange);
     }
     async do() {
         const channel_sender = await this.createChannel();
