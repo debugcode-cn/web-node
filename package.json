@@ -12,6 +12,7 @@
         "pm2-test": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
         "pm2": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
         "build": "cross-env NODE_ENV=production webpack --config .webpack.js",
+        "test": "npx jest",
         "prepare": "husky install"
     },
     "dependencies": {
@@ -44,6 +45,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.13.15",
+        "@babel/preset-env": "^7.19.0",
         "@typescript-eslint/eslint-plugin": "^5.27.1",
         "@typescript-eslint/parser": "^5.27.1",
         "babel-loader": "^8.2.2",
@@ -74,12 +76,5 @@
     "nodemonConfig": {
         "verbose": true,
         "delay": 1000
-    },
-    "babel": {
-        "presets": [
-            "env",
-            "stage-3",
-            "es2017"
-        ]
     }
 }
