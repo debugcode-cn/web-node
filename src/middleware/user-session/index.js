@@ -34,7 +34,7 @@ module.exports = {
 
                 let trans = await global.DB_Redis.multi();
                 await trans.hset(session_id, 'last_vt', session.last_vt);
-                await trans.exec((err, result) => { console.log(err, result); });
+                await trans.exec();
                 await global.DB_Redis.expire(session_id, CookieSession.SessionExpire);
             } else {
                 session_id = 'sid_' + UUID.v1().replace(/-/g, ''); //生成新的session_id

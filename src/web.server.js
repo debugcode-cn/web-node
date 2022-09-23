@@ -13,10 +13,8 @@ const ENV_Production = process.env.NODE_ENV === 'production';
 const { CookieSession } = require('./constant');
 // ==========================================引入核心模块===========================================
 const SBiz = require('./base/SBiz');
-// ==========================================引入路由=============================================
-const Router = require('./router');
+// ==========================================引入中间件=============================================
 const Nunjucks = require('./middleware/nunjucks');
-const Controller = require('./middleware/controller');
 const UserSession = require('./middleware/user-session');
 // ===========================================引入数据库驱动管理器====================================
 const DBManager = require(`./components/db-client/index.js`);
@@ -56,7 +54,7 @@ class WebApp {
             multipart: true,
             encoding: 'utf-8',
             formidable: {
-                uploadDir: __dirname + '/assets/uploaded',
+                uploadDir: __dirname + '/assets/uploaded',// TODO use oss
                 keepExtensions: true,
                 maxFieldsSize: 5 * 1024 * 1024,
                 onFileBegin: (name, file) => {
@@ -68,8 +66,8 @@ class WebApp {
 
         app.use(Nunjucks(path.join(__dirname, 'view'), { noCache: !ENV_Production, watch: !ENV_Production }));
         app.use(UserSession.loadSessionFromRedis());
-        app.use(Controller.api());
-
+        
+        const Router = require('./router');
         app.use(Router.routerWeb.routes());
         app.use(Router.routerWeb.allowedMethods());
 

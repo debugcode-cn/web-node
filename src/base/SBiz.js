@@ -66,14 +66,5 @@ class SBiz {
         return sequelize_instance.model(name);
     }
 
-    // 加载所有路由
-    static routes() {
-        require(`${__dirname}/../api / index.js`)
-            .map((subrouters) => {
-                router.use(subrouters.routes()).use(subrouters.allowedMethods());
-            });
-        return router.routes();
-    }
-
 }
 module.exports = SBiz;

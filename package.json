@@ -72,9 +72,5 @@
     },
     "lint-staged": {
         "{src,scripts}/**/*.js": "eslint --cache --fix"
-    },
-    "nodemonConfig": {
-        "verbose": true,
-        "delay": 1000
     }
 }

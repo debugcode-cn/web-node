@@ -8,14 +8,8 @@ class SocketIOManager {
             pingTimeout: 5000,
             cors: {
                 origin: [
-                    'http://localhost',
-                    'https://localhost',
                     'http://localhost:3000',
                     'https://localhost:3000',
-                    'http://localhost:3001',
-                    'https://localhost:3001',
-                    'http://localhost:8000',
-                    'https://localhost:8000',
                 ],
                 methods: ['GET', 'POST', 'PUT'],
                 allowedHeaders: ['X-Custom-Header'],

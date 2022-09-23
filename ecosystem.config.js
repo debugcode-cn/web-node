@@ -8,6 +8,7 @@ const _watch = {
         'src/assets/uploaded',
         'package.json',
         'package-lock.json',
+        'yarn-lock.json',
     ],
 };
 
@@ -165,8 +166,7 @@ module.exports = {
             path: '/home/wanglei/workspace/web-node-development',
             'pre-deploy-local': '',
             'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-development,api-development" --env development',
+            'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-development,api-development" --env development',
         },
         test: {
             ..._deploy_linuxlei,
@@ -174,16 +174,14 @@ module.exports = {
             path: '/home/wanglei/workspace/web-node-test',
             'pre-deploy-local': '',
             'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-test,api-test" --env test',
+            'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-test,api-test" --env test',
         },
         production: {
             ..._deploy_linuxlei,
             path: '/home/wanglei/workspace/web-node-production',
             'pre-deploy-local': '',
             'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-production,api-production" --env production',
+            'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-production,api-production" --env production',
         },
     },
 };

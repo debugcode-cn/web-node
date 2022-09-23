@@ -1,12 +1,18 @@
+const crypto = require('crypto');
+
+const UserModel = require('../model/user.mysql');
+
 class UserBiz {
-    static async create(time_create) {
-        return await UserModel.findOrCreate({
-            where: { namenick: 'User_' + time_create },
-            defaults: { password: '123@qq.com' },
-        });
+    static verifyPassword(user, password) {
+        let user_password = user.getDataValue('password');
+        let user_salt = user.getDataValue('salt');
+
+        const sha256 = crypto.createHash('sha256');
+        const password2verify = sha256.update(`${password}${user_salt}`).digest('hex');
+        return user_password === password2verify;
     }
 
-    static async signIn() {}
+    static async signIn() { }
 
     /**
      * 获取用户

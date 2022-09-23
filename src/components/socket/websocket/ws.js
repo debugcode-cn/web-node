@@ -27,6 +27,7 @@ class Wechat {
      */
     render(jq_element) {
         if (this.connected) {
+            // 
         } else {
             //开始渲染连接中，
             //开启定时检查是否已经连接

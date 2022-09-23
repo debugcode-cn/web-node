@@ -12,9 +12,9 @@ const ENV_Production = process.env.NODE_ENV === 'production';
 const { CookieSession } = require('./constant');
 // ==========================================引入核心模块===========================================
 const SBiz = require('./base/SBiz');
-// ==========================================引入路由=============================================
-const Router = require('./router');
-const Controller = require('./middleware/controller');
+// ==========================================引入中间件=============================================
+const CtxJson = require('./middleware/ctx-json');
+const CtxCatch = require('./middleware/ctx-catch');
 const UserSession = require('./middleware/user-session');
 // ===========================================引入数据库驱动管理器===================================
 const DBManager = require(`./components/db-client/index.js`);
@@ -43,8 +43,7 @@ class ApiApp {
             keys: CookieSession.CookieKeys,
         });
         app.on('error', (err, ctx) => {
-            console.error('Oh~Oh~Oh!!!! Find An Error Inner Api');
-            console.error(err);
+            console.error('===app-error===', err);
         });
 
         app.use(cors());
@@ -53,7 +52,7 @@ class ApiApp {
             multipart: true,
             encoding: 'utf-8',
             formidable: {
-                uploadDir: __dirname + '/assets/uploaded',
+                uploadDir: __dirname + '/assets/uploaded',// TODO use oss
                 keepExtensions: true,
                 maxFieldsSize: 5 * 1024 * 1024,
                 onFileBegin: (name, file) => {
@@ -65,8 +64,10 @@ class ApiApp {
         }));
 
         app.use(UserSession.loadSessionFromRedis());
-        app.use(Controller.api());
+        app.use(CtxJson());
+        app.use(CtxCatch());
 
+        const Router = require('./router');
         app.use(Router.routerApi.routes());
         app.use(Router.routerApi.allowedMethods());
 
