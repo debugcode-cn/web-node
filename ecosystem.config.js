@@ -167,7 +167,7 @@ function getPostDeployCmd(instance_names_only = []) {
     if (!instance_names_only.length) {
         throw new Error('instance_names_only invalid');
     }
-    return 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'' + instance_names_only.join() + '\' --env development && pm2 update && pm2 save';
+    return 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'' + instance_names_only.join() + '\' --env development && pm2 update && pm2 save --force';
 }
 
 module.exports = {
