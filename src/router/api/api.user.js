@@ -58,7 +58,7 @@ router.post('/signin', async (ctx, next) => {
     let user_plain = user.get({ plain: true });
     let token = JWT.sign({ user_id: user_plain.id }, Jwtkey, { expiresIn: '30d' });
     console.log(token);
-    ctx.json({ user: user_plain, authorization: token });
+    ctx.json({ user: user_plain, authorization: 'Bearer ' + token });
     await next();
 });
 
