@@ -163,6 +163,12 @@ const baseHome = '/home/wanglei/workspace/www';
 const homeDev = baseHome + '/web-node-development';
 const homeTest = baseHome + '/web-node-test';
 const homeProd = baseHome + '/web-node-production';
+function getPostDeployCmd(instance_names_only = []) {
+    if (!instance_names_only.length) {
+        throw new Error('instance_names_only invalid');
+    }
+    return 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'' + instance_names_only.join() + '\' --env development && pm2 update && pm2 save';
+}
 
 module.exports = {
     apps: [...apps_development, ...apps_test, ...apps_production],
@@ -174,7 +180,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeDev + ' && mkdir -p ' + homeDev,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web- development, api- development\' --env development && pm2 save',
+            'post-deploy': getPostDeployCmd(['web-development', 'api-development'])
         },
         test: {
             ..._deploy_linuxlei,
@@ -183,7 +189,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeTest + ' && mkdir -p ' + homeTest,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-test,api-test\' --env test && pm2 save',
+            'post-deploy': getPostDeployCmd(['web-test', 'api-test'])
         },
         production: {
             ..._deploy_linuxlei,
@@ -191,7 +197,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeProd + ' && mkdir -p ' + homeProd,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-production,api-production\' --env production && pm2 save',
-        },
+            'post-deploy': getPostDeployCmd(['web-production', 'api-production'])
+        }
     },
 };
