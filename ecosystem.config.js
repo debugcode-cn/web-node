@@ -41,6 +41,8 @@ const _deploy_linuxlei = {
     host: ['192.168.3.25'],
     ref: 'origin/master',
     repo: 'https://e.coding.net/codelei/www/web-node.git',
+    'pre-setup': '',
+    'post-setup': '',
 };
 
 // ==================================================== //
@@ -164,23 +166,23 @@ module.exports = {
             ..._deploy_linuxlei,
             ref: 'origin/develop',
             path: '/home/wanglei/workspace/web-node-development',
+            "pre-setup": "mkdir -p /home/wanglei/workspace/web-node-development",
             'pre-deploy-local': '',
-            'pre-setup': '',
             'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-development,api-development" --env development',
         },
         test: {
             ..._deploy_linuxlei,
             ref: 'origin/test',
             path: '/home/wanglei/workspace/web-node-test',
+            "pre-setup": "mkdir -p /home/wanglei/workspace/web-node-test",
             'pre-deploy-local': '',
-            'pre-setup': '',
             'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-test,api-test" --env test',
         },
         production: {
             ..._deploy_linuxlei,
             path: '/home/wanglei/workspace/web-node-production',
+            "pre-setup": "mkdir -p /home/wanglei/workspace/web-node-production",
             'pre-deploy-local': '',
-            'pre-setup': '',
             'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --only "web-production,api-production" --env production',
         },
     },
