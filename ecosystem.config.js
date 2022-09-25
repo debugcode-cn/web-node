@@ -159,34 +159,39 @@ const apps_production = [
     },
 ];
 
+const baseHome = '/home/wanglei/workspace/www';
+const homeDev = baseHome + '/web-node-development';
+const homeTest = baseHome + '/web-node-test';
+const homeProd = baseHome + '/web-node-production';
+
 module.exports = {
     apps: [...apps_development, ...apps_test, ...apps_production],
     deploy: {
         development: {
             ..._deploy_linuxlei,
             ref: 'origin/develop',
-            path: '/home/wanglei/workspace/www/web-node-development',
-            "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-development && mkdir -p /home/wanglei/workspace/www/web-node-development",
-            "post-setup": "pwd",
+            path: homeDev,
+            "pre-setup": 'rm -rf ' + homeDev + ' && mkdir -p ' + homeDev,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 &&  nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web- development, api- development\' --env development && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web- development, api- development\' --env development && pm2 save',
         },
         test: {
             ..._deploy_linuxlei,
             ref: 'origin/test',
-            path: '/home/wanglei/workspace/www/web-node-test',
-            "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-test && mkdir -p /home/wanglei/workspace/www/web-node-test",
-            "post-setup": "pwd",
+            path: homeTest,
+            "pre-setup": 'rm -rf ' + homeTest + ' && mkdir -p ' + homeTest,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 &&  nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-test,api-test\' --env test && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-test,api-test\' --env test && pm2 save',
         },
         production: {
             ..._deploy_linuxlei,
-            path: '/home/wanglei/workspace/www/web-node-production',
-            "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-production && mkdir -p /home/wanglei/workspace/www/web-node-production",
-            "post-setup": "pwd",
+            path: homeProd,
+            "pre-setup": 'rm -rf ' + homeProd + ' && mkdir -p ' + homeProd,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-production,api-production\' --env production && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-production,api-production\' --env production && pm2 save',
         },
     },
 };
