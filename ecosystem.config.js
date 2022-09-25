@@ -169,7 +169,7 @@ module.exports = {
             "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-development && mkdir -p /home/wanglei/workspace/www/web-node-development",
             "post-setup": "pwd",
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && npm install && pm2 startOrRestart ecosystem.config.js --only \'web- development, api- development\' --env development && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 &&  nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web- development, api- development\' --env development && pm2 save',
         },
         test: {
             ..._deploy_linuxlei,
@@ -178,7 +178,7 @@ module.exports = {
             "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-test && mkdir -p /home/wanglei/workspace/www/web-node-test",
             "post-setup": "pwd",
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-test,api-test\' --env test && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 &&  nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-test,api-test\' --env test && pm2 save',
         },
         production: {
             ..._deploy_linuxlei,
@@ -186,7 +186,7 @@ module.exports = {
             "pre-setup": "rm -rf /home/wanglei/workspace/www/web-node-production && mkdir -p /home/wanglei/workspace/www/web-node-production",
             "post-setup": "pwd",
             'pre-deploy-local': '',
-            'post-deploy': 'ls -la && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-production,api-production\' --env production && pm2 save',
+            'post-deploy': 'ls -la && nvm install v14.17.0 && nvm use && npm install && pm2 startOrRestart ecosystem.config.js --only \'web-production,api-production\' --env production && pm2 save',
         },
     },
 };
