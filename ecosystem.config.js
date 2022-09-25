@@ -163,11 +163,11 @@ const baseHome = '/home/wanglei/workspace/www';
 const homeDev = baseHome + '/web-node-development';
 const homeTest = baseHome + '/web-node-test';
 const homeProd = baseHome + '/web-node-production';
-function getPostDeployCmd(instance_names_only = []) {
+function getPostDeployCmd(env_name, instance_names_only = []) {
     if (!instance_names_only.length) {
         throw new Error('instance_names_only invalid');
     }
-    return 'ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only \'' + instance_names_only.join() + '\' --env development && pm2 update && pm2 save --force';
+    return `ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2 && npm install && pm2 startOrRestart ecosystem.config.js --only '${instance_names_only.join()}' --env ${env_name} && pm2 update && pm2 save --force`;
 }
 
 module.exports = {
@@ -180,7 +180,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeDev + ' && mkdir -p ' + homeDev,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': getPostDeployCmd(['web-development', 'api-development'])
+            'post-deploy': getPostDeployCmd('development', ['web-development', 'api-development'])
         },
         test: {
             ..._deploy_linuxlei,
@@ -189,7 +189,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeTest + ' && mkdir -p ' + homeTest,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': getPostDeployCmd(['web-test', 'api-test'])
+            'post-deploy': getPostDeployCmd('test', ['web-test', 'api-test'])
         },
         production: {
             ..._deploy_linuxlei,
@@ -197,7 +197,7 @@ module.exports = {
             "pre-setup": 'rm -rf ' + homeProd + ' && mkdir -p ' + homeProd,
             "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'post-deploy': getPostDeployCmd(['web-production', 'api-production'])
+            'post-deploy': getPostDeployCmd('production', ['web-production', 'api-production'])
         }
     },
 };
