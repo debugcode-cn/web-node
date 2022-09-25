@@ -1,4 +1,1 @@
-module.exports = {
-    Role: require('./role.model'),
-    User: require('./user.model'),
-};
+//所有模型统一操作

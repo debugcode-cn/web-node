@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": ["scripts/**/*"],
+  "execMap": {},
+  "delay": 2500
+}

@@ -8,12 +8,11 @@
     "scripts": {
         "api": "cross-env NODE_ENV=development PORT=10091 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' src/api.server.js",
         "web": "cross-env NODE_ENV=development PORT=10092 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' src/web.server.js",
-        "niapi": "cross-env NODE_ENV=development PORT=10093 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' --inspect src/api.server.js",
-        "niweb": "cross-env NODE_ENV=development PORT=10094 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' --inspect src/web.server.js",
-        "pdev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
-        "ptest": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
-        "pstart": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
+        "pm2-dev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
+        "pm2-test": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
+        "pm2": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
         "build": "cross-env NODE_ENV=production webpack --config .webpack.js",
+        "test": "npx jest",
         "prepare": "husky install"
     },
     "dependencies": {
@@ -25,14 +24,16 @@
         "http-errors": "^1.7.3",
         "iconv-lite": "^0.5.1",
         "influx": "^5.9.3",
+        "jsonwebtoken": "^8.5.1",
         "koa": "^2.12.0",
         "koa-body": "^4.1.3",
         "koa-morgan": "^1.0.1",
         "koa-router": "^10.0.0",
-        "koa-static": "^5.0.0",
+        "koa-static-cache": "^5.1.4",
         "koa2-cors": "^2.0.6",
         "log4js": "^6.3.0",
         "mongoose": "~5.12.1",
+        "mqtt": "^4.3.7",
         "mysql2": "^2.1.0",
         "needle": "^2.5.0",
         "nunjucks": "^3.2.1",
@@ -44,6 +45,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.13.15",
+        "@babel/preset-env": "^7.19.0",
         "@typescript-eslint/eslint-plugin": "^5.27.1",
         "@typescript-eslint/parser": "^5.27.1",
         "babel-loader": "^8.2.2",
@@ -70,16 +72,5 @@
     },
     "lint-staged": {
         "{src,scripts}/**/*.js": "eslint --cache --fix"
-    },
-    "nodemonConfig": {
-        "verbose": true,
-        "delay": 1000
-    },
-    "babel": {
-        "presets": [
-            "env",
-            "stage-3",
-            "es2017"
-        ]
     }
 }

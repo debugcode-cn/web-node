@@ -1,47 +1,69 @@
 'use strict';
 
 const { Client } = require('@elastic/elasticsearch');
-const client = new Client({ node: 'http://192.168.3.25:9200' });
+const client = new Client({
+    node: ['http://192.168.3.25:9210']
+});
 
-async function run() {
+const docs = [
+    {
+        character: 'Ned Stark',
+        quote: 'Winter is coming.',
+    },
+    {
+        character: 'Daenerys Targaryen',
+        quote: 'I am the blood of the dragon.',
+    },
+    {
+        character: 'Tyrion Lannister',
+        quote: 'A mind needs books like a sword needs a whetstone.',
+    }
+];
+
+class ESearch {
+    constructor(index) {
+        index = String(index || '').trim();
+        if (!index) {
+            throw new Error('');
+        }
+        this.index = index;
+    }
+    async create(document) {
+        await client.index({
+            index: this.index,
+            document: { ...document },
+        });
+    }
+
+    async search(query = {}) {
+        await client.search({
+            index: this.index,
+            query: query
+        });
+    }
+}
+
+(async () => {
+    let esearch = new ESearch('test');
+
     // Let's start by indexing some data
-    await client.index({
-        index: 'game-of-thrones',
-        document: {
-            character: 'Ned Stark',
-            quote: 'Winter is coming.',
-        },
+    await esearch.create({
+        character: 'Ned Stark',
+        quote: 'Winter is coming.',
     });
 
-    await client.index({
-        index: 'game-of-thrones',
-        document: {
-            character: 'Daenerys Targaryen',
-            quote: 'I am the blood of the dragon.',
-        },
-    });
-
-    await client.index({
-        index: 'game-of-thrones',
-        document: {
-            character: 'Tyrion Lannister',
-            quote: 'A mind needs books like a sword needs a whetstone.',
-        },
-    });
-
-    // here we are forcing an index refresh, otherwise we will not
-    // get any result in the consequent search
+    // // here we are forcing an index refresh, otherwise we will not
+    // // get any result in the consequent search
     await client.indices.refresh({ index: 'game-of-thrones' });
 
     // Let's search!
-    const result = await client.search({
-        index: 'game-of-thrones',
-        query: {
-            match: { quote: '*' },
-        },
+    const result = await esearch.search({
+        match: {
+            character: "Daenerys*"
+        }
     });
 
-    console.log(result.hits.hits);
-}
+    console.log(result.hits);
 
-run().catch(console.log);
+    run().catch(console.log);
+})();

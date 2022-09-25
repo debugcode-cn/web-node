@@ -4,3 +4,4 @@
 .DS_Store
 .husky
 /src/assets/uploaded/*
+.eslintcache

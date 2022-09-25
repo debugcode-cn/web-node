@@ -8,6 +8,7 @@ const _watch = {
         'src/assets/uploaded',
         'package.json',
         'package-lock.json',
+        'yarn-lock.json',
     ],
 };
 
@@ -39,7 +40,9 @@ const _deploy_linuxlei = {
     user: 'wanglei',
     host: ['192.168.3.25'],
     ref: 'origin/master',
-    repo: 'https://e.coding.net/codelei/www/web-node.git',
+    repo: 'git@e.coding.net:codelei/www/web-node.git',
+    'pre-setup': '',
+    'post-setup': '',
 };
 
 // ==================================================== //
@@ -156,34 +159,45 @@ const apps_production = [
     },
 ];
 
+const baseHome = '/home/wanglei/workspace/www';
+const homeDev = baseHome + '/web-node-development';
+const homeTest = baseHome + '/web-node-test';
+const homeProd = baseHome + '/web-node-production';
+function getPostDeployCmd(env_name, instance_names_only = []) {
+    if (!instance_names_only.length) {
+        throw new Error('instance_names_only invalid');
+    }
+    return `ls -la && nvm install v14.17.0 && nvm use && npm i -g pm2@5.1.0 && npm install && pm2 startOrRestart ecosystem.config.js --only '${instance_names_only.join()}' --env ${env_name} && pm2 save --force && pm2 update`;
+}
+
 module.exports = {
     apps: [...apps_development, ...apps_test, ...apps_production],
     deploy: {
         development: {
             ..._deploy_linuxlei,
             ref: 'origin/develop',
-            path: '/home/wanglei/workspace/web-node-development',
+            path: homeDev,
+            "pre-setup": 'rm -rf ' + homeDev + ' && mkdir -p ' + homeDev,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-development,api-development" --env development',
+            'post-deploy': getPostDeployCmd('development', ['web-development', 'api-development'])
         },
         test: {
             ..._deploy_linuxlei,
             ref: 'origin/test',
-            path: '/home/wanglei/workspace/web-node-test',
+            path: homeTest,
+            "pre-setup": 'rm -rf ' + homeTest + ' && mkdir -p ' + homeTest,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-test,api-test" --env test',
+            'post-deploy': getPostDeployCmd('test', ['web-test', 'api-test'])
         },
         production: {
             ..._deploy_linuxlei,
-            path: '/home/wanglei/workspace/web-node-production',
+            path: homeProd,
+            "pre-setup": 'rm -rf ' + homeProd + ' && mkdir -p ' + homeProd,
+            "post-setup": 'pwd',
             'pre-deploy-local': '',
-            'pre-setup': '',
-            'post-deploy':
-                'npm install && pm2 startOrRestart ecosystem.config.js --only "web-production,api-production" --env production',
-        },
+            'post-deploy': getPostDeployCmd('production', ['web-production', 'api-production'])
+        }
     },
 };

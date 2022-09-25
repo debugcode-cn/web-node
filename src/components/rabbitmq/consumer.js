@@ -2,18 +2,27 @@
  * 订阅者.创建
  */
 
-const EventEmitter = require('events');
+const Channel = require('./channel');
 
-class EventSomething extends EventEmitter {
-    constructor() {
-        super();
-        this.event_name = 'consumer_something';
+class RabbitmqConsumer extends Channel {
+    constructor(queue) {
+        super(queue);
+    }
+    async do() {
+        const channel_receiver = await this.createChannel();
+        await channel_receiver.assets(this.queue);
+        await channel_receiver.assertQueue(this.queue);
+        channel_receiver.consume(this.queue, (msg) => {
+            if (msg !== null) {
+                console.log('Recieved:', msg.content.toString());
+                // if (Date.now() % 2 == 0) {
+                channel_receiver.ack(msg);
+                // }
+            } else {
+                console.log('Consumer cancelled by server');
+            }
+        });
     }
 }
 
-class EventRabbitmq extends EventEmitter {
-    constructor() {
-        super();
-        this.event_name = 'consumer_rabbitmq';
-    }
-}
+module.exports = RabbitmqConsumer;
