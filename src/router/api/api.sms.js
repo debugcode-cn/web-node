@@ -50,11 +50,9 @@ router.post('/sms/reminder', async (ctx, next) => {
     }];
 
     // 2.2、执行任务：将待发送信息放入并发控制队列
-    let length = name_phone_list.length;
-    for (let i = 0; i < length; i += 10) {
-        let name_phone = name_phone_list.splice(0, 10);
-        smsSendQuene.push(name_phone);
-    }
+    name_phone_list.map(item => {
+        smsSendQuene.push(item);
+    });
 });
 
 module.exports = router;
