@@ -1,5 +1,4 @@
 // =========================================定义基本模块============================================
-const ServerPort = process.env.PORT || 10092;
 const path = require('path');
 const UUID = require('uuid');
 const morgan = require('koa-morgan');
@@ -8,6 +7,7 @@ const KoaStaticCache = require('koa-static-cache');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
+const ServerPort = process.env.PORT;
 const ENV_Production = process.env.NODE_ENV === 'production';
 // ==========================================定义全局变量===========================================
 const { CookieSession } = require('./constant');
@@ -66,7 +66,7 @@ class WebApp {
 
         app.use(Nunjucks(path.join(__dirname, 'view'), { noCache: !ENV_Production, watch: !ENV_Production }));
         app.use(UserSession.loadSessionFromRedis());
-        
+
         const Router = require('./router');
         app.use(Router.routerWeb.routes());
         app.use(Router.routerWeb.allowedMethods());

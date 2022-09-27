@@ -1,5 +1,4 @@
 // =========================================定义基本模块============================================
-const ServerPort = process.env.PORT;
 const path = require('path');
 const UUID = require('uuid');
 const Koa = require('koa');
@@ -7,6 +6,7 @@ const morgan = require('koa-morgan');
 const KoaBody = require('koa-body');
 const cors = require('koa2-cors');
 const createError = require('http-errors');
+const ServerPort = process.env.PORT;
 const ENV_Production = process.env.NODE_ENV === 'production';
 // ==========================================定义全局变量===========================================
 const { CookieSession } = require('./constant');

@@ -16,8 +16,10 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "@alicloud/sms-sdk": "^1.1.6",
         "@elastic/elasticsearch": "^8.0.0",
         "amqplib": "^0.8.0",
+        "async": "^3.2.4",
         "axios": ">=0.21.2",
         "cookies": "^0.8.0",
         "he": "^1.2.0",

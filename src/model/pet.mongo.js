@@ -6,6 +6,9 @@ const schema = new mongoose.Schema({
     namenick: String,
     email: String,
     password: String,
+}, {
+    minimize: false,
+    timestamps: { createdAt: 'createTime', updatedAt: 'lastModifyTime' }
 });
 
 // 定义方法

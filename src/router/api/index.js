@@ -3,4 +3,5 @@ module.exports = [
     require('./api.file'),
     require('./api.stream'),
     require('./api.user'),
+    require('./api.sms'),
 ];
