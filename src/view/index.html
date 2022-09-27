@@ -12,7 +12,15 @@
         <h1>{{where.is}}</h1>
         <h2>hello world</h2>
         <h1>{{test.time}}</h1>
+        <br/>
 
+        <h1>XSS</h1>
+        <h1>{{test|dump}}</h1>
+        <h1>{{axss}}</h1>
+        <a href="{{axss_link}}">link</a>
+        <img src="{{axss_link}}" onerror="onerror"/>
+        <h1>{{password}}</h1>
+        
         <div><a target="blank" href="/wechat">聊天室</a></div>
         <div><a target="blank" href="/socketio">聊天室2</a></div>
 

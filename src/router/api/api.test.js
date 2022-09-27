@@ -89,5 +89,22 @@ const PetMongo = require('../../model/pet.mongo');
     });
 }
 
+// xss
+{
+    router.post('/test/xss/v:id', async (ctx, next) => {
+        const query = ctx.query;
+        const body = ctx.request.body;
+        const params = ctx.params;
+
+        await PetMongo.create({
+            name: query.name,
+            namenick: query.namenick,
+            email: body.email,
+            password: body.password
+        });
+
+        ctx.json({ query, body, params });
+    });
+}
 
 module.exports = router;
