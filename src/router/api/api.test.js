@@ -4,10 +4,27 @@ const Jwt = require('jsonwebtoken');
 const Router = require('koa-router');
 const Auth = require('../../middleware/auth/index');
 const router = new Router();
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+const PetMongo = require('../../model/pet.mongo');
 
 {
     router.get('/test', async (ctx, next) => {
-        ctx.json({ name: 'wlz', test: true, api: 'test' });
+        let time = Date.now();
+        let index = new ObjectId().toString();
+        console.log('::' + index + '::AAAAA');
+        await new Promise((resolve, reject) => {
+            console.log('::' + index + '::BBBBB');
+            setTimeout(resolve, 1);
+        });
+        await PetMongo.create({
+            name: "String",
+            namenick: "String",
+            email: "String",
+            password: "String"
+        });
+        console.log('::' + index + '::CCCCCC');
+        ctx.json({ name: 'wlz', test: true, api: 'test', time });
         await next();
     });
 
