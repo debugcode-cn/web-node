@@ -34,7 +34,7 @@
         "koa-static-cache": "^5.1.4",
         "koa2-cors": "^2.0.6",
         "log4js": "^6.3.0",
-        "mongoose": "~5.12.1",
+        "mongoose": "~5.13.15",
         "mqtt": "^4.3.7",
         "mysql2": "^2.1.0",
         "needle": "^2.5.0",
