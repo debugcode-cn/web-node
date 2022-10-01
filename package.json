@@ -6,8 +6,8 @@
     "author": "debugcode",
     "license": "ISC",
     "scripts": {
-        "api": "cross-env NODE_ENV=development PORT=10091 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' src/api.server.js",
-        "web": "cross-env NODE_ENV=development PORT=10092 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' src/web.server.js",
+        "web": "cross-env NODE_ENV=development PORT=10091 nodemon --watch src --ignore src/api.server.js --ignore 'src/assets/uploaded/*' src/web.server.js",
+        "api": "cross-env NODE_ENV=development PORT=10092 nodemon --watch src --ignore src/web.server.js --ignore 'src/assets/uploaded/*' src/api.server.js",
         "pm2-dev": "pm2 startOrRestart ecosystem.config.js --only 'web-development, api-development' --env development",
         "pm2-test": "pm2 startOrRestart ecosystem.config.js --only 'web-test, api-test' --env test",
         "pm2": "pm2 startOrRestart ecosystem.config.js --only 'web-production, api-production' --env production",
